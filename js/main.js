@@ -8,8 +8,8 @@ let promises = [
 function initMainPage(allDataArray) {
 
 
-    ytDashVis = new ytDash('ytDashDiv')
+    ytDashVis = new YtDashboard('ytDashDiv')
 
-    viewsVis = new viewsPieChart('viewsPieChartDiv')
+    viewsVis = new PieChart('viewsPieChartDiv')
 
 }
