@@ -1,0 +1,27 @@
+.roboto-mainfont {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+:root {
+    --primary-color: #EB0E3A;
+    --secondary-color: #F54A6A;
+    --tertiary-color: #F88797;
+    --background-color: #FAC4C3;
+    --accent-color: #FFF0DA;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    background-color: var(--background-color);
+}
+
+.header {
+    background-color: var(--primary-color);
+    color: white
+} 
