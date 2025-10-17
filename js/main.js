@@ -1,5 +1,6 @@
 let ytDashVis,
-    viewsVis;
+    viewsVis,
+    shortsVis;
 
 let promises = [
     d3.csv("data/youtube_data.csv")
@@ -12,4 +13,10 @@ function initMainPage(allDataArray) {
 
     viewsVis = new PieChart('viewsPieChartDiv')
 
+    shortsVis = new ShortsVis('shortsChartDiv');
+
+}
+
+function resetShortsVis() {
+    shortsVis.resetVis();
 }
