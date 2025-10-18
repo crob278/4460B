@@ -9,15 +9,14 @@ class ShortsVis {
     constructor(parentElement, data) {
         this.parentElement = parentElement;
         this.data = data | null;
-        this.t = 0.0;
         this.active = false;
+        this.timer = null;
+        this.t = 0;
 
         this.initVis();
     }
     initVis() {
         let vis = this;
-
-        vis.t = 0.0;
         
         // Margin Convention
         vis.margin = {top: 10, right: 60, bottom: 10, left: 60};
@@ -31,12 +30,18 @@ class ShortsVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        // Titles
+        vis.timer = d3.timer(() => {});
         
-        // Seconds Elapsed Box
+        vis.timerGroup = vis.svg.append('g')
+            .attr('class', 'timerGroup');
 
-        // Seconds of Youtube Shorts Watched Box
+        vis.timerText = vis.timerGroup.append('text')
+            .attr('class', 'timerText')
+            .attr('x', 0)
+            .attr('y', 0)
+            .text('Time Elapsed: 0.0 s');
 
+    
 
 
     }
@@ -44,23 +49,35 @@ class ShortsVis {
     renderVis() {
         let vis = this;
         vis.active = true;
-
+        vis.timer.restart((elapsed) => {
+            vis.t = (elapsed / 1000).toFixed(2); // Ms to S
+            vis.updateVis(); // Updates on every frame (60fps)
+        }); 
     }
 
     resetVis() {
         let vis = this;
-        vis.t = 0.0;
         vis.active = false;
+        vis.timer.stop();
+        vis.t = 0.0;
+
+        vis.updateVis();
+    }
+
+    changeView() {
+        let vis = this;
 
         vis.updateVis();
     }
 
     updateVis() {
         let vis = this;
-        
+
+        vis.timerText.text(`Time Elapsed: ${vis.t} s`);
     }
 
 
 
 }
+
 
