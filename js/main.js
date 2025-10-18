@@ -1,9 +1,12 @@
 let ytDashVis,
-    viewsVis;
+    viewsVis,
+    rankVis;
 
-let promises = [
-    d3.csv("data/youtube_data.csv")
-];
+// let promises = [
+//     d3.csv("data/youtube_data.csv")
+// ];
+
+loadRankData();
 
 function initMainPage(allDataArray) {
 
@@ -12,4 +15,32 @@ function initMainPage(allDataArray) {
 
     viewsVis = new PieChart('viewsPieChartDiv')
 
+}
+
+function loadRankData() {
+    d3.csv("data/channelrank_data.csv").then(csvData => {
+        let data = prepDataForRVis(csvData);
+
+        console.log(data);
+
+        rankVis = new ChannelRank("rank-list", data);
+
+    })
+
+}
+
+function prepDataForRVis(csvData) {
+    let preparedData = {
+        countries: [],
+        rankings: {}
+    };
+
+    preparedData.countries = csvData.columns;
+
+    preparedData.countries.forEach(country => {
+        const rankings = csvData.map(row => row[country]).filter(d => d && d.trim() !== "");
+        preparedData.rankings[country] = rankings;
+    })
+
+    return preparedData;
 }
