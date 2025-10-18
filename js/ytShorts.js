@@ -31,6 +31,8 @@ class ShortsVis {
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
         vis.timer = d3.timer(() => {});
+
+        vis.scaleFactor = ((vis.height - 60) / vis.height) * 100;
         
         vis.timerGroup = vis.svg.append('g')
             .attr('class', 'timerGroup');
@@ -41,8 +43,31 @@ class ShortsVis {
             .attr('y', 0)
             .text('Time Elapsed: 0.0 s');
 
-    
+        vis.timerBar = vis.timerGroup.append('rect')
+            .attr('class', 'timerRect')
+            .attr('x', 0)
+            .attr('y', 20)
+            .attr('width', 10)
+            .attr('height', 1)
+            .attr('fill', 'red');
 
+
+        vis.shortsTimerGroup = vis.svg.append('g')
+            .attr('class', 'shortsTimerGroup');
+            
+        vis.shortsTimerText = vis.shortsTimerGroup.append('text')
+            .attr('class', 'shortsTimerText')
+            .attr('x', 100)
+            .attr('y', 0)
+            .text('Time Spent Watching Shorts: 0.0 s');
+
+        vis.shortsTimerBar = vis.shortsTimerGroup.append('rect')
+            .attr('class', 'timerRect shortsTimerRect')
+            .attr('x', 100)
+            .attr('y', 20)
+            .attr('width', 0)
+            .attr('height', 0)
+            .attr('fill', 'red');
 
     }
 
@@ -66,7 +91,7 @@ class ShortsVis {
 
     changeView() {
         let vis = this;
-
+        vis.resetVis();
         vis.updateVis();
     }
 
@@ -74,6 +99,11 @@ class ShortsVis {
         let vis = this;
 
         vis.timerText.text(`Time Elapsed: ${vis.t} s`);
+        vis.timerBar.attr('height', vis.t * vis.scaleFactor);
+
+        vis.shortsTimerText.text(`Time Spent Watching Shorts: ${vis.t} s`);
+        vis.shortsTimerBar.attr('width', (vis.t * 50))
+            .attr('height', vis.t * 50);
     }
 
 

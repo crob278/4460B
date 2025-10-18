@@ -25,3 +25,7 @@ body {
     background-color: var(--primary-color);
     color: white
 } 
+
+.timerRect {
+    fill: var(--secondary-color);
+}
