@@ -15,6 +15,55 @@
     --accent-color: #FFF0DA;
 }
 
+#podium-frame {
+    border: 2px black solid;
+    border-radius: 10px;
+    background-color: white;
+    width: 220px;
+    text-align: center;
+    overflow: hidden;
+}
+
+#podium-header {
+    text-align: center;
+    background-color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#podium-hover {
+    background-color: lightgray;
+}
+
+#podium-after {
+    content: "▼";
+    font-size: 10px;
+}
+
+#podium-ranks ul{
+    list-style-type: none;
+}
+
+#podium-ranks ul li {
+    padding: 10px 10px;
+    border-top: 1px black solid;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+}
+
+#podium-ranks ul li:nth-child(1) {
+    background-color: goldenrod;
+}
+
+#podium-ranks ul li:nth-child(2) {
+    background-color: silver;
+}
+
+#podium-ranks ul li:nth-child(3) {
+    background-color: rosybrown;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     font-size: 12px;

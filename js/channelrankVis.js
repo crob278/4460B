@@ -14,27 +14,10 @@ class ChannelRank {
 
         vis.container = d3.select(`#${vis._parentElement}`);
 
-        vis.dropDownSelect = vis.container.append("select")
-            .attr("id", "CountryList")
-            .style("font-size", "12px")
-            .style("padding", "5px")
-            .on("change", d => {
-                vis.updateVis(d);
-            })
-
-        vis.dropDownSelect.selectAll("option")
-            .data(vis.data.countries)
-            .enter()
-            .append("option")
-            .attr("value", d=> d)
-            .text(d => d)
-
         vis.rankBox = vis.container.append("div")
-            .attr("id", "podium")
-            .style("font-size", "12px")
-            .style("margin-top", "10px")
+            .attr("id", "podium-frame")
 
-        vis.updateVis(vis.data.countries[0])
+        vis.updateVis(vis._data.countries[0])
 
     }
 
@@ -44,21 +27,42 @@ class ChannelRank {
         vis.rankBox.selectAll("*").remove();
 
         const podium = vis.rankBox.append("div")
-            .style("font-size", "12px")
-            .style("width", "100px")
+            .attr("id", "podium-ranks");
 
-        podium.append("div")
-            .style("background-color", "white")
-            .text(d)
+        const podiumHeader = podium.append("div")
+            .attr("id", "podium-header")
+            .text(d);
 
-        const list = podium.append("ul")
-            .style("list-style-type", "none")
+        const podiumMenu = podium.append("div")
+            .attr("id", "podium-menu")
+            .style("display", "none");
+
+        podiumMenu.selectAll("div")
+            .data(vis._data.countries)
+            .enter()
+            .append("div")
+            .text(d => d)
+            .on("click", function(event, d) {
+                vis.updateVis(d);
+            })
+
+
+        podiumHeader.on("click", function() {
+            const isVisible = podiumMenu.style("display") === "block";
+            podiumMenu.style("display", isVisible ? "none" : "block");
+        });
+
+        const list = podium.append("ul");
+
+        const ranks = vis._data.rankings[d] || [];
 
         list.selectAll("li")
-            .data(vis._data.rankings[d])
+            .data(ranks)
             .enter()
             .append("li")
             .text(d => d)
+            .style("text-align", "center");
+
     }
 
 }

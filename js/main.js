@@ -24,6 +24,7 @@ function loadRankData() {
         console.log(data);
 
         rankVis = new ChannelRank("rank-list", data);
+        rankVis.initVis();
 
     })
 
