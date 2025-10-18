@@ -35,13 +35,13 @@
     background-color: lightgray;
 }
 
-#podium-after {
-    content: "▼";
-    font-size: 10px;
-}
+
 
 #podium-ranks ul{
     list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #podium-ranks ul li {

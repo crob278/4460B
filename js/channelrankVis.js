@@ -31,7 +31,7 @@ class ChannelRank {
 
         const podiumHeader = podium.append("div")
             .attr("id", "podium-header")
-            .text(d);
+            .text(d + "▼");
 
         const podiumMenu = podium.append("div")
             .attr("id", "podium-menu")
