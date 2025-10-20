@@ -27,6 +27,12 @@ body {
     color: white
 } 
 
+div#shortsChartDiv {
+    transform: translate(30px, 0px);
+    padding: 10px;
+    margin-top: 20px;
+}
+
 .timerRect {
     fill: var(--primary-color);
     stroke : solid var(--tertiary-color);

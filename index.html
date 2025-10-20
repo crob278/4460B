@@ -35,13 +35,16 @@
             <div class="col">
                 <h1> The Scale of Time spent on Youtube</h1>
                 <p>TODO: Make this text description make sense</p>
-                <button type="button" class="btn btn-primary"
-                        onclick="startShortsTimer()">Start</button>
-                <button type="button" class="btn btn-light"
-                        onclick="resetShortsVis()">Reset</button>
-                <button type="button" class="btn btn-dark"
-                        onclick="changeShortsView()">Change View</button>
-                <div id="shortsChartDiv" style="width: 100%; height: 71vh;"></div>
+                <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
+                <div id="shortsVisControls">
+                    <button type="button" class="btn btn-primary"
+                            onclick="startShortsTimer()">Start</button>
+                    <button type="button" class="btn btn-light"
+                            onclick="resetShortsVis()">Reset</button>
+                    <button type="button" class="btn btn-dark"
+                            onclick="changeShortsView()">Change View</button>
+                    </div>
+                </div>
                 <div id="sources">
                     <p>src: <a href="https://blog.youtube/news-and-events/neal-mohan-cannes-2025/">https://blog.youtube/news-and-events/neal-mohan-cannes-2025/</a> - Statistic for YT shorts avg 200b daily views 
                     <br>src: <a href="https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/">https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/</a> - Total youtube viewership statistic</br></p>

@@ -21,7 +21,7 @@ class ShortsVis {
         let vis = this;
         
         // Margin Convention
-        vis.margin = {top: 10, right: 60, bottom: 10, left: 60};
+        vis.margin = {top: 10, right: 20, bottom: 10, left: 20};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
@@ -66,7 +66,7 @@ class ShortsVis {
         vis.shortsTimerGroup = vis.svg.append('g')
             .attr('class', 'shortsTimerGroup')
             .attr('visible', 'true')
-            .attr('transform', `translate(160, 20)`);
+            .attr('transform', `translate(170, 20)`);
             
         vis.shortsTimerText = vis.shortsTimerGroup.append('text')
             .attr('class', 'timerText shortsTimerText')
@@ -74,14 +74,14 @@ class ShortsVis {
 
         vis.shortsTimerBar = vis.shortsTimerGroup.append('rect')
             .attr('class', 'timerRect shortsTimerRect')
-            .attr('y', 5)
+            .attr('y', 10)
             .attr('width', 0)
             .attr('height', 0)
             .attr('fill', 'red'); // overriden in css
 
         vis.videoTimerGroup = vis.svg.append('g')
             .attr('class', 'videoTimerGroup')
-            .attr('transform', `translate(160, 20)`)
+            .attr('transform', `translate(170, 20)`)
             .attr('visibility', 'hidden');
             
         vis.videoTimerText = vis.videoTimerGroup.append('text')
@@ -90,7 +90,7 @@ class ShortsVis {
 
         vis.videoTimerBar = vis.videoTimerGroup.append('rect')
             .attr('class', 'timerRect videoTimerRect')
-            .attr('y', 5)
+            .attr('y', 10)
             .attr('width', 0)
             .attr('height', 0)
             .attr('fill', 'red');
