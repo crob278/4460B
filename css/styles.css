@@ -13,7 +13,57 @@
     --tertiary-color: #F88797;
     --background-color: #FAC4C3;
     --accent-color: #FFF0DA;
+    --text-color: #4a3939;
 }
+
+#podium-frame {
+    border: 2px black solid;
+    border-radius: 10px;
+    background-color: white;
+    width: 220px;
+    text-align: center;
+    overflow: hidden;
+}
+
+#podium-header {
+    text-align: center;
+    background-color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#podium-hover {
+    background-color: lightgray;
+}
+
+
+
+#podium-ranks ul{
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#podium-ranks ul li {
+    padding: 10px 10px;
+    border-top: 1px black solid;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+}
+
+#podium-ranks ul li:nth-child(1) {
+    background-color: goldenrod;
+}
+
+#podium-ranks ul li:nth-child(2) {
+    background-color: silver;
+}
+
+#podium-ranks ul li:nth-child(3) {
+    background-color: rosybrown;
+}
+
 
 body {
     font-family: Arial, sans-serif;
@@ -25,3 +75,45 @@ body {
     background-color: var(--primary-color);
     color: white
 } 
+
+div#shortsChartDiv {
+    transform: translate(30px, 0px);
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.timerRect {
+    fill: var(--primary-color);
+    stroke : solid var(--tertiary-color);
+    stroke-width: 1;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.731));
+}
+
+.timerText {
+    font-size: 16px;
+    fill: var(--text-color);
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+.btn-light {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.btn-light:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+.btn-dark {
+    background-color: var(--tertiary-color);
+    border-color: var(--tertiary-color);
+}
+.btn-dark:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
