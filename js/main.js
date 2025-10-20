@@ -2,7 +2,7 @@ let ytDashVis,
     viewsVis;
 
 let promises = [
-    d3.csv("data/youtube_data.csv")
+    // d3.csv("data/youtube_data.csv")
 ];
 
 function initMainPage(allDataArray) {
