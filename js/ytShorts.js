@@ -9,8 +9,10 @@ class ShortsVis {
     constructor(parentElement, data) {
         this.parentElement = parentElement;
         this.data = data | null;
-        this.active = false;
+        this.view = false; // false = shorts, true = regular videos
         this.timer = null;
+        this.shortsFactor;
+        this.videoFactor;
         this.t = 0;
 
         this.initVis();
@@ -32,39 +34,63 @@ class ShortsVis {
 
         vis.timer = d3.timer(() => {});
 
-        vis.scaleFactor = ((vis.height - 60) / vis.height) * 100;
+        // Hardcoding values for how fast shorts vs regular videos are watched
+        vis.shortsScale = 2e11 * 15; // Seconds on shorts per day
+        vis.videoScale = 1e9 * 60 * 60; // Seconds on regular videos per day
+
+        vis.shortsScale /= (24 * 60 * 60); // per second
+        vis.videoScale /= (24 * 60 * 60);
+
+        vis.shortsScale /= (60 * 60); // convert to hours
+        vis.videoScale /= (60 * 60); 
+
+
+        vis.scaleFactor = vis.height / 60;
         
         vis.timerGroup = vis.svg.append('g')
-            .attr('class', 'timerGroup');
+            .attr('class', 'timerGroup')
+            .attr('transform', `translate(0, 20)`);
 
         vis.timerText = vis.timerGroup.append('text')
             .attr('class', 'timerText')
-            .attr('x', 0)
-            .attr('y', 0)
             .text('Time Elapsed: 0.0 s');
 
         vis.timerBar = vis.timerGroup.append('rect')
             .attr('class', 'timerRect')
-            .attr('x', 0)
-            .attr('y', 20)
+            .attr('y', 5) 
             .attr('width', 10)
             .attr('height', 1)
             .attr('fill', 'red');
 
 
         vis.shortsTimerGroup = vis.svg.append('g')
-            .attr('class', 'shortsTimerGroup');
+            .attr('class', 'shortsTimerGroup')
+            .attr('visible', 'true')
+            .attr('transform', `translate(160, 20)`);
             
         vis.shortsTimerText = vis.shortsTimerGroup.append('text')
-            .attr('class', 'shortsTimerText')
-            .attr('x', 100)
-            .attr('y', 0)
-            .text('Time Spent Watching Shorts: 0.0 s');
+            .attr('class', 'timerText shortsTimerText')
+            .text('Collective hours spent watching youtube shorts: 0.0 hrs');
 
         vis.shortsTimerBar = vis.shortsTimerGroup.append('rect')
             .attr('class', 'timerRect shortsTimerRect')
-            .attr('x', 100)
-            .attr('y', 20)
+            .attr('y', 5)
+            .attr('width', 0)
+            .attr('height', 0)
+            .attr('fill', 'red'); // overriden in css
+
+        vis.videoTimerGroup = vis.svg.append('g')
+            .attr('class', 'videoTimerGroup')
+            .attr('transform', `translate(160, 20)`)
+            .attr('visibility', 'hidden');
+            
+        vis.videoTimerText = vis.videoTimerGroup.append('text')
+            .attr('class', 'timerText videoTimerText')
+            .text('Collective hours spent watching youtube videos: 0.0 hrs');
+
+        vis.videoTimerBar = vis.videoTimerGroup.append('rect')
+            .attr('class', 'timerRect videoTimerRect')
+            .attr('y', 5)
             .attr('width', 0)
             .attr('height', 0)
             .attr('fill', 'red');
@@ -73,16 +99,14 @@ class ShortsVis {
 
     renderVis() {
         let vis = this;
-        vis.active = true;
         vis.timer.restart((elapsed) => {
             vis.t = (elapsed / 1000).toFixed(2); // Ms to S
-            vis.updateVis(); // Updates on every frame (60fps)
+            vis.updateVis(); // Updates on every frame
         }); 
     }
 
     resetVis() {
         let vis = this;
-        vis.active = false;
         vis.timer.stop();
         vis.t = 0.0;
 
@@ -91,7 +115,11 @@ class ShortsVis {
 
     changeView() {
         let vis = this;
-        vis.resetVis();
+        vis.view = !vis.view;
+
+        vis.shortsTimerGroup.attr('visibility', `${!vis.view ? 'visible' : 'hidden'}`);
+        vis.videoTimerGroup.attr('visibility', `${vis.view ? 'visible' : 'hidden'}`);
+
         vis.updateVis();
     }
 
@@ -101,12 +129,17 @@ class ShortsVis {
         vis.timerText.text(`Time Elapsed: ${vis.t} s`);
         vis.timerBar.attr('height', vis.t * vis.scaleFactor);
 
-        vis.shortsTimerText.text(`Time Spent Watching Shorts: ${vis.t} s`);
-        vis.shortsTimerBar.attr('width', (vis.t * 50))
-            .attr('height', vis.t * 50);
+        let shortsTime = Math.sqrt(vis.t * vis.shortsScale).toFixed(2); 
+        vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${shortsTime} hrs`);
+        vis.shortsTimerBar.attr('height', (shortsTime))
+            .attr('width', shortsTime);
+
+        let videoTime = Math.sqrt(vis.t * vis.videoScale).toFixed(2);
+        vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${videoTime} hrs`);
+        vis.videoTimerBar.attr('width', (videoTime))
+            .attr('height', videoTime);
+
     }
-
-
 
 }
 
