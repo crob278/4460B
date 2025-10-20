@@ -33,8 +33,22 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1> the scale of youtube shorts - Sean </h1>
-                <div id="chart-3"></div>
+                <h1> The Scale of Time spent on Youtube</h1>
+                <p>TODO: Make this text description make sense</p>
+                <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
+                <div id="shortsVisControls">
+                    <button type="button" class="btn btn-primary"
+                            onclick="startShortsTimer()">Start</button>
+                    <button type="button" class="btn btn-light"
+                            onclick="resetShortsVis()">Reset</button>
+                    <button type="button" class="btn btn-dark"
+                            onclick="changeShortsView()">Change View</button>
+                    </div>
+                </div>
+                <div id="sources">
+                    <p>src: <a href="https://blog.youtube/news-and-events/neal-mohan-cannes-2025/">https://blog.youtube/news-and-events/neal-mohan-cannes-2025/</a> - Statistic for YT shorts avg 200b daily views 
+                    <br>src: <a href="https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/">https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/</a> - Total youtube viewership statistic</br></p>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -50,7 +64,6 @@
             </div>
         </div>
     </div>
-
 <!-- JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -58,9 +71,10 @@
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <!-- Our Scripts -->
+
 <script src="js/pieChart.js"></script>
 <script src="js/ytDashboard.js"></script>
-
+<script src="js/ytShorts.js"></script>
 <script src="js/main.js"></script>
 
 </body>
