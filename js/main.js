@@ -1,6 +1,6 @@
 let ytDashVis,
     viewsVis,
-    rankVis;
+    rankVis,
     shortsVis;
 
 // let promises = [
@@ -20,14 +20,12 @@ function initMainPage(allDataArray) {
     // ytDashVis = new YtDashboard('ytDashDiv')
 
     // viewsVis = new PieChart('viewsPieChartDiv')
-
+    
     shortsVis = new ShortsVis('shortsChartDiv');
 
 }
 
 initMainPage(null);
-
-}
 
 function loadRankData() {
     d3.csv("data/channelrank_data.csv").then(csvData => {
