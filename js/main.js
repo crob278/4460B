@@ -19,7 +19,7 @@ function initMainPage(allDataArray) {
 
     // ytDashVis = new YtDashboard('ytDashDiv')
 
-    // viewsVis = new PieChart('viewsPieChartDiv')
+    viewsVis = new PieChart('viewsPieChartDiv')
     
     shortsVis = new ShortsVis('shortsChartDiv');
 
