@@ -1,6 +1,7 @@
 let ytDashVis,
     viewsVis,
     rankVis;
+    shortsVis;
 
 // let promises = [
 //     d3.csv("data/youtube_data.csv")
@@ -8,12 +9,23 @@ let ytDashVis,
 
 loadRankData();
 
+
+// Promise.all(promises)
+//     .then( function(){ initMainPage(null) })
+//     .catch( function (err){console.log(err)} );
+
 function initMainPage(allDataArray) {
 
 
-    ytDashVis = new YtDashboard('ytDashDiv')
+    // ytDashVis = new YtDashboard('ytDashDiv')
 
-    viewsVis = new PieChart('viewsPieChartDiv')
+    // viewsVis = new PieChart('viewsPieChartDiv')
+
+    shortsVis = new ShortsVis('shortsChartDiv');
+
+}
+
+initMainPage(null);
 
 }
 
@@ -45,3 +57,7 @@ function prepDataForRVis(csvData) {
 
     return preparedData;
 }
+
+function startShortsTimer() { shortsVis.renderVis(); }
+function resetShortsVis() { shortsVis.resetVis(); }
+function changeShortsView() { shortsVis.changeView(); }
