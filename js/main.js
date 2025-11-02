@@ -6,7 +6,28 @@ let ytDashVis,
 
 // Load Data with Promises
 let promises = [
-    d3.csv("data/youtube_data.csv"),
+    d3.csv("data/youtube_data.csv").then(csvData => {
+        csvData.forEach(d => {
+            // video_id: string
+            d.duration = +d.duration;
+            d.bitrate = +d.bitrate;
+            d["bitrate(video)"] = +d["bitrate(video)"];
+            d.height = +d.height;
+            d.width = +d.width;
+            d["frame rate"] = +d["frame rate"];
+            d["frame rate(est.)"] = +d["frame rate(est.)"];
+            // codec: string
+            // category: string
+            // url: string
+            // title: string
+            // description: string
+            d.hashtags = Array.from(d.hashtags.split(",")).map(s => s.trim()); // string -> string[], it was just one long string
+            d.views = +d.views;
+            d.likes = +d.likes;
+            d.comments = +d.comments;
+        });
+        return csvData;
+    }),
     d3.csv("data/channelrank_data.csv").then(csvData => {
         return prepDataForRVis(csvData);
     })
@@ -18,7 +39,8 @@ Promise.all(promises)
 
 
 function initMainPage(allDataArray) {
-
+    // For Debugging
+    // console.log(allDataArray);
 
     // ytDashVis = new YtDashboard('ytDashDiv')
 
