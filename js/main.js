@@ -1,45 +1,39 @@
 let ytDashVis,
     viewsVis,
     rankVis,
-    shortsVis;
+    shortsVis,
+    engagementVis;
 
-// let promises = [
-//     d3.csv("data/youtube_data.csv")
-// ];
+// Load Data with Promises
+let promises = [
+    d3.csv("data/youtube_data.csv"),
+    d3.csv("data/channelrank_data.csv").then(csvData => {
+        return prepDataForRVis(csvData);
+    })
+];
 
-loadRankData();
+Promise.all(promises)
+    .then( function(data){ initMainPage(data) })
+    .catch( function (err){console.log(err)} );
 
-
-// Promise.all(promises)
-//     .then( function(){ initMainPage(null) })
-//     .catch( function (err){console.log(err)} );
 
 function initMainPage(allDataArray) {
 
 
     // ytDashVis = new YtDashboard('ytDashDiv')
 
-    viewsVis = new PieChart('viewsPieChartDiv')
+    viewsVis = new PieChart('viewsPieChartDiv');
     
     shortsVis = new ShortsVis('shortsChartDiv');
 
-}
+    rankVis = new ChannelRank("rank-list", allDataArray[1]);
+    rankVis.initVis();
 
-initMainPage(null);
-
-function loadRankData() {
-    d3.csv("data/channelrank_data.csv").then(csvData => {
-        let data = prepDataForRVis(csvData);
-
-        console.log(data);
-
-        rankVis = new ChannelRank("rank-list", data);
-        rankVis.initVis();
-
-    })
+    engagementVis = new EngagementVis('rulesChartArea', allDataArray[0]);
 
 }
 
+// Data Preparation for Ranking Vis
 function prepDataForRVis(csvData) {
     let preparedData = {
         countries: [],
@@ -56,6 +50,7 @@ function prepDataForRVis(csvData) {
     return preparedData;
 }
 
+// Accessors for YT Shorts Vis
 function startShortsTimer() { shortsVis.renderVis(); }
 function resetShortsVis() { shortsVis.resetVis(); }
 function changeShortsView() { shortsVis.changeView(); }
