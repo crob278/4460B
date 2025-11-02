@@ -23,6 +23,8 @@ function initMainPage(allDataArray) {
     
     shortsVis = new ShortsVis('shortsChartDiv');
 
+
+    engagementVis = new EngagementVis('rulesChartArea', allDataArray);
 }
 
 initMainPage(null);
