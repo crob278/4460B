@@ -56,7 +56,7 @@ class EngagementVis {
             likes: number,
             comments: number
         */
-       console.log(vis.data);
+       // console.log(vis.data);
         
 
         vis.updateVis();
