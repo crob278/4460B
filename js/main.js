@@ -1,18 +1,19 @@
 let ytDashVis,
     viewsVis,
     rankVis,
-    shortsVis;
+    shortsVis,
+    engagementVis;
 
-// let promises = [
-//     d3.csv("data/youtube_data.csv")
-// ];
+let promises = [
+    d3.csv("data/youtube_data.csv")
+];
+Promise.all(promises)
+    .then( function(data){ initMainPage(data) })
+    .catch( function (err){console.log(err)} );
+
+
 
 loadRankData();
-
-
-// Promise.all(promises)
-//     .then( function(){ initMainPage(null) })
-//     .catch( function (err){console.log(err)} );
 
 function initMainPage(allDataArray) {
 
@@ -23,11 +24,11 @@ function initMainPage(allDataArray) {
     
     shortsVis = new ShortsVis('shortsChartDiv');
 
+    engagementVis = new EngagementVis('rulesChartArea', allDataArray[0]);
 
-    engagementVis = new EngagementVis('rulesChartArea', allDataArray);
 }
 
-initMainPage(null);
+// initMainPage(null);
 
 function loadRankData() {
     d3.csv("data/channelrank_data.csv").then(csvData => {

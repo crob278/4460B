@@ -28,12 +28,36 @@ class EngagementVis {
         // Axes
 
         // Titles and Labels
+
+
+        vis.wrangleData();
     }
 
     wrangleData() {
         let vis = this;
         
-        // Format Data
+        /* 
+        Incoming Data:
+            video_id: string,
+            duration: number,
+            bitrate: number,
+            bitrate(video): number,
+            height: number,
+            width: number,
+            frame rate: number,
+            frame rate(est.): number,
+            codec: string,
+            category: string,
+            url: string,
+            title: string,
+            description: string,
+            hashtags: string[],
+            views: number,
+            likes: number,
+            comments: number
+        */
+       console.log(vis.data);
+        
 
         vis.updateVis();
     }
