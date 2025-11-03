@@ -77,3 +77,15 @@ function prepDataForRVis(csvData) {
 function startShortsTimer() { shortsVis.renderVis(); }
 function resetShortsVis() { shortsVis.resetVis(); }
 function changeShortsView() { shortsVis.changeView(); }
+
+
+// Accessors for Engagement Vis
+function updateEngagementCategory() { 
+    let newCategory = document.getElementById('categorySelector').value;
+    engagementVis.changeCategory(newCategory);
+}
+
+function updateEngagementThreshold() { 
+    let newThreshold = +document.getElementById('viewThreshold').value;
+    engagementVis.changeViewThreshold(newThreshold);
+}

@@ -1,3 +1,24 @@
+const categoryMap = {
+    0: "News & Politics",
+    1: "Gaming",
+    2: "Comedy",
+    3: "People & Blogs",
+    4: "Entertainment",
+    5: "Music",
+    6: "Education",
+    7: "Nonprofits & Activis",
+    8: "Sports",
+    9: "Autos & Vehicles",
+    10: "Howto & Style",
+    11: "Travel & Events",
+    12: "Film & Animation",
+    13: "Science & Technology",
+    14: "Pets & Animals",
+    15: "Shows"
+};
+
+
+
 
 class EngagementVis {
     constructor(parentElement, data) {
@@ -6,8 +27,8 @@ class EngagementVis {
         this.filteredData = [];
         this.displayData = [];
 
-        this.category = "all"; 
-        this.viewThreshold = 100000;
+        this.category = "News & Politics"; // Default Category
+        this.viewThreshold = 1000; // Default View Threshold
         
         this.initVis();
     }
@@ -27,16 +48,18 @@ class EngagementVis {
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
         // Scales 
-        vis.x = d3.scaleLinear()
+        vis.x = d3.scalePow()
+            .exponent(0.5)
             .range([0, vis.width]);
-            
-        vis.y = d3.scaleLinear()
+
+        vis.y = d3.scalePow()
+            .exponent(0.5)
             .range([vis.height, 0]);
 
-        vis.colorScale = d3.scaleSequential((t) => d3.hsl(360, 1, 0.5));
+        vis.colorScale = d3.scaleSequentialLog(d3.interpolateMagma);
 
         vis.r = d3.scaleSqrt()
-            .range([3, 30]);
+            .range([3, 50]);
 
         // Main Chart
         vis.chart = vis.svg.append("g")
@@ -56,12 +79,25 @@ class EngagementVis {
             .attr("class", "axis y-axis")
             .attr("transform", "translate(0,0)")
 
+        // Axis Labels
+        vis.xAxisLabel = vis.svg.append("text")
+            .attr("class", "x axis-label")
+            .attr("x", vis.width - 200)
+            .attr("y", vis.height - 10)
+            .text("Like Percentage (Likes / Views)");
+
+        vis.yAxisLabel = vis.svg.append("text")
+            .attr("class", "y axis-label")
+            .attr("x", 0)
+            .attr("y", -10)
+            .attr("text-anchor", "left")
+            .attr("transform", "rotate(90)")
+            .text("Comment Percentage (Comments / Views)");
+
         vis.xAxis = d3.axisBottom(vis.x)
-            .ticks(5)
             .tickFormat(d3.format(".1%"));
 
         vis.yAxis = d3.axisLeft(vis.y)
-            .ticks(5)
             .tickFormat(d3.format(".1%"));
 
         // Tooltip
@@ -77,28 +113,10 @@ class EngagementVis {
         // let categories = Array.from(new Set(vis.data.map(d => d.category)));
         // console.log(categories);
 
-        /* Categories 
-            0: "News & Politics"
-            1: "Gaming"
-            2: "Comedy"
-            3: "People & Blogs"
-            4: "Entertainment"
-            5: "Music"
-            6: "Education"
-            7: "Nonprofits & Activis"
-            8: "Sports"
-            9: "Autos & Vehicles"
-            10: "Howto & Style"
-            11: "Travel & Events"
-            12: "Film & Animation"
-            13: "Science & Technology"
-            14: "Pets & Animals"
-            15: "Shows"
-        */
-
+        
         // Filter data based on config
         vis.filteredData = d3.filter(vis.data, d => {
-            if (vis.category === "all") {
+            if (!vis.category) {
                 return true;
             } else {
                 return d.category === vis.category;
@@ -194,7 +212,7 @@ class EngagementVis {
 
     changeCategory(category) {
         let vis = this;
-        vis.category = category;
+        vis.category = categoryMap[category] || null;
 
         vis.wrangleData();
     }

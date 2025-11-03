@@ -76,7 +76,28 @@
         <div class="row">
             <div class="col" style="height: 71vh; width: auto;">
                 <h1> Rules of Engagement</h1>
-                <p> Analyzing the Relationship Between Views, Likes, and Comments on YouTube Videos</p>
+                <p> Explore the relationship between views and engagement metrics on YouTube. Click on a video to open it</p>
+                <div id="engagementControls" style="display: inline;">
+                    <p style="display: inline;"> Select Video Category: </p>
+                    <select id="categorySelector" class="form-select" style="width: 25%; display: inline;" onchange="updateEngagementCategory()">
+                        <option value="0">News & Politics</option>
+                        <option value="1">Gaming</option>
+                        <option value="2">Comedy</option>
+                        <option value="3">People & Blogs</option>
+                        <option value="4">Entertainment</option>
+                        <option value="5">Music</option>
+                        <option value="6">Education</option>
+                        <option value="7">Nonprofits & Activism</option>
+                        <option value="8">Sports</option>
+                        <option value="9">Autos & Vehicles</option>
+                        <option value="10">Howto & Style</option>
+                        <option value="11">Travel & Events</option>
+                        <option value="12">Film & Animation</option>
+                        <option value="13">Science & Technology</option>
+                        <option value="14">Pets & Animals</option>
+                        <option value="15">Shows</option>
+                    </select>
+                </div>
                 <div id="rulesChartArea" style="height: 100%; width: 100%;" ></div>
             <div class="col">
             </div>
