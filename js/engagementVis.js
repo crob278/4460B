@@ -15,7 +15,7 @@ class EngagementVis {
         let vis = this;
         
         // Margin Convention
-        vis.margin = {top: 20, right: 20, bottom: 50, left: 50};
+        vis.margin = {top: 20, right: 20, bottom: 100, left: 50};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
@@ -33,8 +33,10 @@ class EngagementVis {
         vis.y = d3.scaleLinear()
             .range([vis.height, 0]);
 
-        vis.colorScale = d3.scaleSequential()
-            .interpolator(d3.interpolateReds);
+        vis.colorScale = d3.scaleSequential((t) => d3.hsl(360, 1, 0.5));
+
+        vis.r = d3.scaleSqrt()
+            .range([3, 30]);
 
         // Main Chart
         vis.chart = vis.svg.append("g")
@@ -56,11 +58,11 @@ class EngagementVis {
 
         vis.xAxis = d3.axisBottom(vis.x)
             .ticks(5)
-            .tickFormat(d3.format(".0%"));
+            .tickFormat(d3.format(".1%"));
 
         vis.yAxis = d3.axisLeft(vis.y)
             .ticks(5)
-            .tickFormat(d3.format(".0%"));
+            .tickFormat(d3.format(".1%"));
 
         // Tooltip
         vis.tooltip = d3.select("body").append("div")
@@ -72,8 +74,29 @@ class EngagementVis {
     wrangleData() {
         let vis = this;
 
+        // let categories = Array.from(new Set(vis.data.map(d => d.category)));
+        // console.log(categories);
+
+        /* Categories 
+            0: "News & Politics"
+            1: "Gaming"
+            2: "Comedy"
+            3: "People & Blogs"
+            4: "Entertainment"
+            5: "Music"
+            6: "Education"
+            7: "Nonprofits & Activis"
+            8: "Sports"
+            9: "Autos & Vehicles"
+            10: "Howto & Style"
+            11: "Travel & Events"
+            12: "Film & Animation"
+            13: "Science & Technology"
+            14: "Pets & Animals"
+            15: "Shows"
+        */
+
         // Filter data based on config
-        console.log(vis.category);
         vis.filteredData = d3.filter(vis.data, d => {
             if (vis.category === "all") {
                 return true;
@@ -93,8 +116,7 @@ class EngagementVis {
                 });
             }
         });
-        console.log(vis.displayData.length);
-        //vis.displayData.sort(d3.descending((a, b) => a.views - b.views));
+        // console.log(vis.displayData.length); Cant display 17000 points
 
         vis.updateVis();
     }
@@ -105,6 +127,8 @@ class EngagementVis {
         // Update scales
         vis.x.domain(d3.extent(vis.displayData, d => d.likePercent));
         vis.y.domain(d3.extent(vis.displayData, d => d.commentPercent));
+        vis.r.domain(d3.extent(vis.displayData, d => d.views));
+
         vis.colorScale.domain(d3.extent(vis.displayData, d => d.views));
 
         vis.circles = vis.circlesGroup.selectAll("circle")
@@ -113,11 +137,23 @@ class EngagementVis {
         vis.circles.enter()
             .append("circle")
             .merge(vis.circles)
-            .attr("cx", d => vis.x(d.likePercent))
-            .attr("cy", d => vis.y(d.commentPercent))
-            .attr("r", 5)
+            .attr("cx", d => { 
+                let x = vis.x(d.likePercent);
+                if(x - vis.r(d.views) < 0) {
+                    x += vis.r(d.views);
+                }
+                return x;
+            })
+            .attr("cy", d => { 
+                let y = vis.y(d.commentPercent);
+                if(y + vis.r(d.views) > vis.height) {
+                    y -= vis.r(d.views);
+                }
+                return y;
+            })
+            .attr("r", d => vis.r(d.views))
             .attr("fill", d => vis.colorScale(d.views))
-            .attr("opacity", 1)
+            .attr("opacity", 0.8)
             .on("mouseover", function(event, d) {
                 d3.select(this)
                     .attr("stroke", "white")
@@ -126,7 +162,7 @@ class EngagementVis {
                 // Tooltip
                 vis.tooltip.style("opacity", 0.9)
                     .style("position", "absolute")
-                    .style("left", (event.pageX + 5) + "px")
+                    .style("left", (event.pageX + 5) + "px") // TODO: Make sure it does not go off screen
                     .style("top", (event.pageY + 5) + "px")
                     .html(`<div id="tooltip-body">
                             <a href="${d.url}" target="_blank"><strong>${d.title}</strong></a><br>
@@ -143,9 +179,9 @@ class EngagementVis {
                 d3.select(this)
                     .attr("stroke", "none");
 
-                vis.tooltip.attr("opacity", 0)
-                    .attr("left", 0)
-                    .attr("top", 0)
+                vis.tooltip.style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
                     .html(``);
             });
 

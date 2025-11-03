@@ -117,3 +117,14 @@ div#shortsChartDiv {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
+
+
+
+/* Tooltip styling */
+.tooltip {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 8px;
+    stroke: var(--text-color);
+    border-radius: 4px;
+}
