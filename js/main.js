@@ -26,6 +26,7 @@ let promises = [
             d.likes = +d.likes;
             d.comments = +d.comments;
         });
+        console.log("Youtube Data Loaded"); 
         return csvData;
     }),
     d3.csv("data/channelrank_data.csv").then(csvData => {
@@ -40,7 +41,7 @@ Promise.all(promises)
 
 function initMainPage(allDataArray) {
     // For Debugging
-    // console.log(allDataArray);
+    console.log(allDataArray);
 
     // ytDashVis = new YtDashboard('ytDashDiv')
 
