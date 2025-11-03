@@ -2,7 +2,8 @@ let ytDashVis,
     viewsVis,
     rankVis,
     shortsVis,
-    engagementVis;
+    engagementVis,
+    diceVis;
 
 // Load Data with Promises
 let promises = [
@@ -53,6 +54,9 @@ function initMainPage(allDataArray) {
     rankVis.initVis();
 
     engagementVis = new EngagementVis('rulesChartArea', allDataArray[0]);
+
+    heatmapVis = new HeatmapVis('heatmap-chart', allDataArray[0]);
+    heatmapVis.initVis();
 
 }
 
