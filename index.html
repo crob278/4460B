@@ -30,14 +30,17 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1> views vs length - Ewuresi</h1>
+                <h1 style="text-align: center;">What video length is most popular?</h1>
                 <div id="viewsPieChartDiv" style="height: 71vh; width: 100%;" ></div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <h1> The Scale of Time spent on Youtube</h1>
-                <p>TODO: Make this text description make sense</p>
+                <p> Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
+                <br>In 2017, they had announced that, in total, people were watching a billion hours of Youtube each day. 
+                <br>Lets put that into perspective...
+                <br>(made by Sean)</p>
                 <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
                 <div id="shortsVisControls">
                     <button type="button" class="btn btn-primary"
@@ -57,17 +60,52 @@
         <div class="row">
             <div class="col">
                 <h1> the yt dashboard one - Ewuresi </h1>
-                <div id="ytDashDiv" style="height: 71vh; width: 100%;" ></div>
+                <div id="ytDashDiv" class="yt-dashboard-container">
+                    <div id="ytVideoArea" class="yt-video-area">
+                    </div>
+                    <div class="yt-slider-container">
+                        <input id="ytSlider" type="range" min="0" max="600" value="0">
+                        <div id="ytTooltip" class="slider-tooltip">0:00</div>
+                    </div>
+                    <div class="yt-info-section">
+                        <h3>Most Popular YouTube Categories by Length</h3>
+                        <div class="yt-info-meta">
+                            <img src="data/yt_icon.png" alt="Profile" class="profile-pic">
+                            <span>YouTube Insights • 1.2M views • 1 day ago</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col" style="height: 71vh; width: auto;">
-                <h1> TODO: Rules of Engagement</h1>
+                <h1> Rules of Engagement</h1>
+                <p> Explore the relationship between views and engagement metrics on YouTube. Click on a video to open it!
+                <br>(made by Sean)</p>
+                <div id="engagementControls" style="display: inline;">
+                    <p style="display: inline;"> Select Video Category: </p>
+                    <select id="categorySelector" class="form-select" style="width: 25%; display: inline;" onchange="updateEngagementCategory()">
+                        <option value="0">News & Politics</option>
+                        <option value="1">Gaming</option>
+                        <option value="2">Comedy</option>
+                        <option value="3">People & Blogs</option>
+                        <option value="4">Entertainment</option>
+                        <option value="5">Music</option>
+                        <option value="6">Education</option>
+                        <option value="7">Nonprofits & Activism</option>
+                        <option value="8">Sports</option>
+                        <option value="9">Autos & Vehicles</option>
+                        <option value="10">Howto & Style</option>
+                        <option value="11">Travel & Events</option>
+                        <option value="12">Film & Animation</option>
+                        <option value="13">Science & Technology</option>
+                        <option value="14">Pets & Animals</option>
+                        <option value="15">Shows</option>
+                    </select>
+                </div>
                 <div id="rulesChartArea" style="height: 100%; width: 100%;" ></div>
-                <p>TODO: Add content for Rules of Engagement</p> 
-                <p>Sources: <a href="https://www.youtube.com/about/policies/#community-guidelines">https://www.youtube.com/about/policies/#community-guidelines</a></p>
+                <p>Source: <a href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a></p>
             <div class="col">
-                
             </div>
         </div>
     </div>
