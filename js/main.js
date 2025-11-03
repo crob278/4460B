@@ -41,13 +41,13 @@ Promise.all(promises)
 
 function initMainPage(allDataArray) {
     // For Debugging
-    console.log(allDataArray);
+    // console.log(allDataArray);
 
-    // ytDashVis = new YtDashboard('ytDashDiv')
+    ytDashVis = new YtDashboard("ytDashDiv", allDataArray[0]);
 
-    viewsVis = new PieChart('viewsPieChartDiv');
-    
-    shortsVis = new ShortsVis('shortsChartDiv');
+    viewsVis = new PieChart('viewsPieChartDiv', allDataArray[0]);
+
+    shortsVis = new ShortsVis('shortsChartDiv', allDataArray[0]);
 
     rankVis = new ChannelRank("rank-list", allDataArray[1]);
     rankVis.initVis();
