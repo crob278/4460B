@@ -26,6 +26,7 @@ let promises = [
             d.likes = +d.likes;
             d.comments = +d.comments;
         });
+        console.log("Youtube Data Loaded"); 
         return csvData;
     }),
     d3.csv("data/channelrank_data.csv").then(csvData => {
@@ -40,7 +41,7 @@ Promise.all(promises)
 
 function initMainPage(allDataArray) {
     // For Debugging
-    // console.log(allDataArray);
+    console.log(allDataArray);
 
     // ytDashVis = new YtDashboard('ytDashDiv')
 
@@ -76,3 +77,15 @@ function prepDataForRVis(csvData) {
 function startShortsTimer() { shortsVis.renderVis(); }
 function resetShortsVis() { shortsVis.resetVis(); }
 function changeShortsView() { shortsVis.changeView(); }
+
+
+// Accessors for Engagement Vis
+function updateEngagementCategory() { 
+    let newCategory = document.getElementById('categorySelector').value;
+    engagementVis.changeCategory(newCategory);
+}
+
+function updateEngagementThreshold() { 
+    let newThreshold = +document.getElementById('viewThreshold').value;
+    engagementVis.changeViewThreshold(newThreshold);
+}
