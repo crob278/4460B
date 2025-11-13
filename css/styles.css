@@ -7,14 +7,60 @@
     "wdth" 100;
 }
 
+/* Overall Styling */
+
 :root {
     --primary-color: #EB0E3A;
     --secondary-color: #F54A6A;
     --tertiary-color: #F88797;
-    --background-color: #FAC4C3;
+    --background-color: #fffbff;
     --accent-color: #FFF0DA;
-    --text-color: #4a3939;
+    --text-color: #291515;
+
 }
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    background-color: var(--background-color);
+}
+
+.header {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+} 
+
+#title-card {
+    margin-bottom: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    margin: auto;
+    padding: 10px 0 0 10px;
+    width: 90vw;
+
+
+    p {
+        font-size: 24px;
+        color: var(--text-color);
+        padding: 10px 5vw 5vw 10px;
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+
+
+/* Vis Styling */
 
 #podium-frame {
     border: 2px black solid;
@@ -64,18 +110,6 @@
     background-color: rosybrown;
 }
 
-
-body {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    background-color: var(--background-color);
-}
-
-.header {
-    background-color: var(--primary-color);
-    color: white
-} 
-
 div#shortsChartDiv {
     transform: translate(30px, 0px);
     padding: 10px;
@@ -92,6 +126,22 @@ div#shortsChartDiv {
 .timerText {
     font-size: 16px;
     fill: var(--text-color);
+}
+.btn {
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    color: var(--text-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btn:hover {
+    transform: translateY(-2px);
+}
+.btn:active {
+    transform: translateY(2px);
 }
 .btn-primary {
     background-color: var(--primary-color);
@@ -117,6 +167,8 @@ div#shortsChartDiv {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
+
+
 .row_Cr {
     display: flex;
     flex-direction: row;
@@ -230,6 +282,10 @@ div#shortsChartDiv {
     margin-right: 10px;
 }
 
+.sources {
+    text-align: right;
+    color: var(--text-color);
+}
 
 
 /* Tooltip styling */
