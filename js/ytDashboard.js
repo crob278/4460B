@@ -74,6 +74,19 @@ class YtDashboard {
             .selectAll("text")
             .attr("fill", "#000");
 
+            vis.treeWidth = d3.select("#ytTreeMapArea").node().clientWidth;
+            vis.treeHeight = d3.select("#ytTreeMapArea").node().clientHeight;
+
+            vis.treeSvg = d3.select("#ytTreeMapArea")
+                .append("svg")
+                .attr("width", vis.treeWidth)
+                .attr("height", vis.treeHeight)
+                .append("g");
+
+            vis.treemap = d3.treemap()
+                .size([vis.treeWidth, vis.treeHeight])
+                .padding(2);
+
             vis.svg.append("text")
                 .attr("x", vis.width / 2 - 20)
                 .attr("y", 0)
@@ -108,6 +121,7 @@ class YtDashboard {
                 .text(`Length: ${timeLabel}`);
 
             vis.updateBars(seconds);
+            vis.updateTreeMap(seconds);
         });
     }
 
@@ -165,6 +179,58 @@ class YtDashboard {
                 })
                 .text(d => formatComma(d.scaledViews))
         );
+    }
+
+    updateTreeMap(seconds) {
+        let vis = this;
+        const fraction = seconds / 600;
+
+        // Scale data
+        const scaledData = vis.displayData.map(d => ({
+            name: d.category,
+            value: Math.round(d.views * fraction)
+        }));
+
+        // Build hierarchy
+        const root = d3.hierarchy({ children: scaledData })
+            .sum(d => d.value);
+
+        vis.treemap(root);
+
+        const nodes = vis.treeSvg.selectAll("g.node")
+            .data(root.leaves(), d => d.data.name);
+
+        const nodeEnter = nodes.enter().append("g")
+            .attr("class", "node");
+
+        nodeEnter.append("rect")
+            .attr("stroke", "#fff")
+            .attr("fill", "#ff6666");
+
+        nodeEnter.append("text")
+            .attr("fill", "#000")
+            .attr("font-size", 12)
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em");
+
+        const allNodes = nodeEnter.merge(nodes);
+
+        allNodes.transition().duration(200)
+            .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+        allNodes.select("rect")
+            .transition().duration(200)
+            .attr("width", d => d.x1 - d.x0)
+            .attr("height", d => d.y1 - d.y0)
+            .attr("fill", d => d3.interpolateReds(d.value / d3.max(scaledData, d => d.value)));
+
+        allNodes.select("text")
+            .transition().duration(200)
+            .attr("x", d => (d.x1 - d.x0) / 2)
+            .attr("y", d => (d.y1 - d.y0) / 2)
+            .text(d => `${d.data.name}\n${d.data.value}`);
+
+        nodes.exit().remove();
     }
 }
 
