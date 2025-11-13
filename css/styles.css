@@ -164,6 +164,7 @@ div#shortsChartDiv {
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    padding: 10px;
 }
 
 .yt-video-area {
@@ -175,7 +176,7 @@ div#shortsChartDiv {
 }
 
 .yt-tree-area {
-    height: 506px;
+    height: 486px;
     background-color: white;
     border-radius: 8px 8px 8px 8px;
     position: relative;
@@ -238,6 +239,18 @@ div#shortsChartDiv {
     padding: 8px;
     stroke: var(--text-color);
     border-radius: 4px;
+}
+
+#treeTooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
 }
 
 

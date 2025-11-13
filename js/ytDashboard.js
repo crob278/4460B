@@ -85,7 +85,8 @@ class YtDashboard {
 
             vis.treemap = d3.treemap()
                 .size([vis.treeWidth, vis.treeHeight])
-                .padding(2);
+                .padding(2)
+                .tile(d3.treemapResquarify);
 
             vis.svg.append("text")
                 .attr("x", vis.width / 2 - 20)
@@ -179,56 +180,130 @@ class YtDashboard {
                 })
                 .text(d => formatComma(d.scaledViews))
         );
+
+        bars.on("mouseover", function(event, d) {
+            // Select the corresponding rectangle in the tree map
+            vis.treeSvg.selectAll(".tree-rect")
+                .filter(r => r.data.name === d.category)
+                .transition().duration(200)
+                .attr("stroke-width", 2)
+                .attr("stroke", "#000")
+                .attr("fill", "#ff6666");
+        })
+            .on("mouseout", function(event, d) {
+                vis.treeSvg.selectAll(".tree-rect")
+                    .filter(r => r.data.name === d.category)
+                    .transition().duration(200)
+                    .attr("stroke-width", 1)
+                    .attr("stroke", "#fff")
+                    .attr("fill", r => d3.interpolateReds(r.value / d3.max(vis.displayData, x => x.views)))
+                    .attr("width", r => r.x1 - r.x0)
+                    .attr("height", r => r.y1 - r.y0);
+            });
+
     }
 
     updateTreeMap(seconds) {
         let vis = this;
-        const fraction = seconds / 600;
+        const fraction = seconds / 600; // progress from 0 to 1
+        const formatComma = d3.format(",");
 
-        // Scale data
+        // Scale data for this second
         const scaledData = vis.displayData.map(d => ({
             name: d.category,
-            value: Math.round(d.views * fraction)
+            value: d.views * fraction
         }));
 
-        // Build hierarchy
-        const root = d3.hierarchy({ children: scaledData })
-            .sum(d => d.value);
+        const totalMax = d3.sum(vis.displayData, d => d.views); // total full value
+        const currentTotal = d3.sum(scaledData, d => d.value);  // current scaled value
 
+        const maxVal = d3.max(vis.displayData, d => d.views);
+
+        // Build hierarchy and compute treemap layout
+        const root = d3.hierarchy({ children: scaledData }).sum(d => d.value);
         vis.treemap(root);
 
-        const nodes = vis.treeSvg.selectAll("g.node")
-            .data(root.leaves(), d => d.data.name);
+        // Compute scaling factor to center the rectangles and grow proportionally
+        const k = Math.sqrt(currentTotal / totalMax); // scale factor based on fraction
+        const tx = (1 - k) / 2 * vis.treeWidth;
+        const ty = (1 - k) / 2 * vis.treeHeight;
 
+        const leaves = root.leaves().map(d => ({
+            ...d,
+            x0: tx + (d.x0) * k,
+            x1: tx + (d.x1) * k,
+            y0: ty + (d.y0) * k,
+            y1: ty + (d.y1) * k
+        }));
+
+        const nodes = vis.treeSvg.selectAll("g.node")
+            .data(leaves, d => d.data.name);
+
+        // Enter
         const nodeEnter = nodes.enter().append("g")
             .attr("class", "node");
 
         nodeEnter.append("rect")
-            .attr("stroke", "#fff")
-            .attr("fill", "#ff6666");
+            .attr("class", "tree-rect")
+            .attr("data-name", d => d.data.name)
+            .attr("x", vis.treeWidth / 2)
+            .attr("y", vis.treeHeight / 2)
+            .attr("width", 0)
+            .attr("height", 0)
+            .attr("fill", "#ff9999")
+            .attr("stroke", "#fff");
 
         nodeEnter.append("text")
-            .attr("fill", "#000")
             .attr("font-size", 12)
             .attr("text-anchor", "middle")
-            .attr("dy", "0.35em");
+            .attr("dy", "0.35em")
+            .attr("fill", "#fff")
+            .text("");
 
         const allNodes = nodeEnter.merge(nodes);
 
-        allNodes.transition().duration(200)
-            .attr("transform", d => `translate(${d.x0},${d.y0})`);
-
+        // Animate rectangles
         allNodes.select("rect")
-            .transition().duration(200)
+            .transition().duration(500).ease(d3.easeCubicOut)
+            .attr("x", d => d.x0)
+            .attr("y", d => d.y0)
             .attr("width", d => d.x1 - d.x0)
             .attr("height", d => d.y1 - d.y0)
-            .attr("fill", d => d3.interpolateReds(d.value / d3.max(scaledData, d => d.value)));
+            .attr("fill", d => d3.interpolateReds(d.value / maxVal));
 
+        // Animate text
         allNodes.select("text")
-            .transition().duration(200)
-            .attr("x", d => (d.x1 - d.x0) / 2)
-            .attr("y", d => (d.y1 - d.y0) / 2)
-            .text(d => `${d.data.name}\n${d.data.value}`);
+            .transition().duration(500).ease(d3.easeCubicOut)
+            .attr("x", d => d.x0 + (d.x1 - d.x0) / 2)
+            .attr("y", d => d.y0 + (d.y1 - d.y0) / 2)
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .attr("font-size", d => Math.min((d.x1 - d.x0) / d.data.name.length, 16)) // max 16px
+            .text(d => (d.x1 - d.x0 > 40 ? d.data.name : ""));
+
+        const tooltip = d3.select("#treeTooltip");
+
+        allNodes.select("rect")
+            .on("mouseover", function(event, d) {
+                const percent = ((d.value / currentTotal) * 100).toFixed(1);
+                tooltip.style("opacity", 1)
+                    .html(`
+                    <strong>${d.data.name}</strong><br>
+                    Views: ${formatComma(Math.round(d.value))}<br>
+                    ${percent}% of total views
+                `)
+                    .style("left", `${event.pageX + 10}px`)
+                    .style("top", `${event.pageY + 10}px`);
+            })
+            .on("mousemove", function(event) {
+                tooltip
+                    .style("left", `${event.pageX + 10}px`)
+                    .style("top", `${event.pageY + 10}px`);
+            })
+            .on("mouseout", function() {
+                tooltip.style("opacity", 0);
+            });
+
 
         nodes.exit().remove();
     }
