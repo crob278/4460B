@@ -12,10 +12,38 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="title-card">
             <div class="col">
                 <div class="header" id="title">
-                    <h1>CS 4460 Final Project</h1>
+                    <h1>Title</h1>
+                </div>
+                <div id="opening">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, debitis consequatur rerum distinctio ipsa laudantium! Aut aliquid necessitatibus libero sequi expedita quae qui facilis, vel recusandae eum. Minus, nemo aperiam.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1> The Scale of Time spent on Youtube</h1>
+                <p>
+                     Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
+                <br>In 2017, they had announced that, in total, people were watching a billion hours of Youtube each day. 
+                <br>Lets put that into perspective...
+            <!--<br>(made by Sean) -->
+                </p>
+                <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
+                <div id="shortsVisControls">
+                    <button type="button" class="btn btn-primary"
+                            onclick="startShortsTimer()">Start</button>
+                    <button type="button" class="btn btn-light"
+                            onclick="resetShortsVis()">Reset</button>
+                    <button type="button" class="btn btn-dark"
+                            onclick="changeShortsView()">Change View</button>
+                    </div>
+                </div>
+                <div class="sources">
+                    <p>src: <a href="https://blog.youtube/news-and-events/neal-mohan-cannes-2025/">https://blog.youtube/news-and-events/neal-mohan-cannes-2025/</a> - Statistic for YT shorts avg 200b daily views 
+                    <br>src: <a href="https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/">https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/</a> - Total youtube viewership statistic</br></p>
                 </div>
             </div>
         </div>
@@ -36,30 +64,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1> The Scale of Time spent on Youtube</h1>
-                <p> Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
-                <br>In 2017, they had announced that, in total, people were watching a billion hours of Youtube each day. 
-                <br>Lets put that into perspective...
-                <br>(made by Sean)</p>
-                <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
-                <div id="shortsVisControls">
-                    <button type="button" class="btn btn-primary"
-                            onclick="startShortsTimer()">Start</button>
-                    <button type="button" class="btn btn-light"
-                            onclick="resetShortsVis()">Reset</button>
-                    <button type="button" class="btn btn-dark"
-                            onclick="changeShortsView()">Change View</button>
-                    </div>
-                </div>
-                <div id="sources">
-                    <p>src: <a href="https://blog.youtube/news-and-events/neal-mohan-cannes-2025/">https://blog.youtube/news-and-events/neal-mohan-cannes-2025/</a> - Statistic for YT shorts avg 200b daily views 
-                    <br>src: <a href="https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/">https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/</a> - Total youtube viewership statistic</br></p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h1> the yt dashboard one - Ewuresi </h1>
+                <h1>Views, Categories, Length, and You!</h1>
                 <div id="ytDashDiv" class="yt-dashboard-container">
                     <div id="ytVideoArea" class="yt-video-area">
                     </div>
@@ -78,7 +83,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" style="height: 71vh; width: auto;">
+            <div class="col" id="eng-vis-wrapper" style="height: 71vh">
                 <h1> Rules of Engagement</h1>
                 <p> Explore the relationship between views and engagement metrics on YouTube. Click on a video to open it!
                 <br>(made by Sean)</p>
@@ -104,7 +109,9 @@
                     </select>
                 </div>
                 <div id="rulesChartArea" style="height: 100%; width: 100%;" ></div>
-                <p>Source: <a href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a></p>
+                <div class="sources">
+                    <p>Source: <a href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a></p>
+                </div>
             <div class="col">
             </div>
         </div>

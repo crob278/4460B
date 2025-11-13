@@ -189,9 +189,10 @@ class EngagementVis {
                             <strong>Comment %:</strong> ${(d.commentPercent * 100).toFixed(2)}%
                         </div>`);
             })
-            // WE CAN GO TO THE VIDEO 
-            .on("click", function(event, d) { 
-                window.open(d.url, '_blank');
+            .on("mousemove", function(event, d) {
+                vis.tooltip
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY + 5) + "px");
             })
             .on("mouseout", function(event, d) {
                 d3.select(this)
@@ -201,12 +202,15 @@ class EngagementVis {
                     .style("left", 0)
                     .style("top", 0)
                     .html(``);
+            })
+            .on("click", function(event, d) { 
+                window.open(d.url, '_blank');
             });
 
         vis.circles.exit().remove();
 
-        vis.svg.select(".x-axis").call(vis.xAxis);
-        vis.svg.select(".y-axis").call(vis.yAxis); 
+        vis.svg.select(".x-axis").transition().duration(1000).call(vis.xAxis);
+        vis.svg.select(".y-axis").transition().duration(1000).call(vis.yAxis);
 
     }
 
