@@ -223,19 +223,43 @@ div#shortsChartDiv {
     height: 400px;
 }
 
+.row_Ea {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
 
 .yt-dashboard-container {
-    width: 640px;
+    width: 600px;
     margin: 40px auto;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     background-color: #fff;
 }
 
+.yt-tree-container {
+    width: 600px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 10px;
+}
+
 .yt-video-area {
     height: 360px;
     background-color: white;
     border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.yt-tree-area {
+    height: 486px;
+    background-color: white;
+    border-radius: 8px 8px 8px 8px;
     position: relative;
     overflow: hidden;
 }
@@ -301,3 +325,38 @@ div#shortsChartDiv {
     stroke: var(--text-color);
     border-radius: 4px;
 }
+
+#treeTooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#pieTooltip{
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#viewsPieChartDiv{
+    height: 71vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+

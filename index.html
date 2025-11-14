@@ -53,19 +53,29 @@
         <div class="row">
             <div class="col">
                 <h1 style="text-align: center;">What video length is most popular?</h1>
-                <div id="viewsPieChartDiv" style="height: 71vh; width: 100%;" ></div>
+                <div id="viewsPieChartDiv"></div>
+                <div id="pieTooltip"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <h1>Views, Categories, Length, and You!</h1>
+        <div class="row_Ea">
+
+            <div class="colLE">
+                <h1> Tree Map </h1>
+                <div id="ytTreeDiv" class="yt-tree-container">
+                    <div id="ytTreeMapArea" class="yt-tree-area"></div>
+                </div>
+            </div>
+
+            <div class="colRE">
+                <h1> Youtube Dashboard </h1>
                 <div id="ytDashDiv" class="yt-dashboard-container">
-                    <div id="ytVideoArea" class="yt-video-area">
-                    </div>
+                        <div id="ytVideoArea" class="yt-video-area"></div>
+
                     <div class="yt-slider-container">
                         <input id="ytSlider" type="range" min="0" max="600" value="0">
                         <div id="ytTooltip" class="slider-tooltip">0:00</div>
                     </div>
+
                     <div class="yt-info-section">
                         <h3>Most Popular YouTube Categories by Length</h3>
                         <div class="yt-info-meta">
@@ -74,7 +84,10 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="treeTooltip"></div>
             </div>
+
         </div>
         <div class="row">
             <div class="col" id="eng-vis-wrapper" style="height: 90vh">

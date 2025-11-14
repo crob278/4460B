@@ -79,7 +79,8 @@ class PieChart{
                     );
 
                 tooltip.style("display", "block")
-                    .html(`Total view count: ${d.data.value.toLocaleString()}`);
+                    .html(`<strong>${d.data.category}</strong><br>Total views: ${d.data.value.toLocaleString()}`)
+                    .style("opacity", 1);
             })
             .on("mousemove", function(event) {
                 tooltip.style("left", (event.pageX + 10) + "px")
@@ -91,7 +92,7 @@ class PieChart{
                     .duration(200)
                     .attr("d", vis.arc);
 
-                tooltip.style("display", "none");
+                tooltip.style("opacity", 0);
             });
 
         const totalViews = d3.sum(vis.aggregatedData, d => d.value);
@@ -110,11 +111,9 @@ class PieChart{
                 const angle = (d.startAngle + d.endAngle) / 2;
                 const midRadius = (vis.arc.innerRadius()() + vis.arc.outerRadius()()) / 2;
 
-                // Compute approximate arc length along outer radius
                 const arcLength = (d.endAngle - d.startAngle) * vis.arc.outerRadius()();
 
-                // Estimate width of the text in pixels
-                const textWidth = percent.length * 7; // ~7px per char, adjust as needed
+                const textWidth = percent.length * 7;
 
                 if (textWidth < arcLength - 50) {
                     // Place inside
@@ -123,7 +122,7 @@ class PieChart{
                         .attr("y", centroid[1])
                         .text(percent);
                 } else {
-                    const r = vis.arc.outerRadius()() + 10; // offset outside
+                    const r = vis.arc.outerRadius()() + 10;
                     d3.select(this)
                         .attr("x", Math.cos(angle - Math.PI/2) * r)
                         .attr("y", Math.sin(angle - Math.PI/2) * r)
