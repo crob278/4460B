@@ -29,12 +29,10 @@
                 </p>
                 <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
                 <div id="shortsVisControls">
-                    <button type="button" class="btn btn-primary"
-                            onclick="startShortsTimer()">Start</button>
-                    <button type="button" class="btn btn-light"
+                    <button type="button" class="btn btn-light" id="pause-button"
+                            onclick="pauseShortsVis()">Pause</button>
+                    <button type="button" class="btn btn-light d-none" id="reset-button"
                             onclick="resetShortsVis()">Reset</button>
-                    <button type="button" class="btn btn-dark"
-                            onclick="changeShortsView()">Change View</button>
                     </div>
                 </div>
                 <div class="sources">
@@ -105,12 +103,8 @@
                         <option value="15">Shows</option>
                     </select>
                 </div>
-                <div id="rulesChartArea" style="height: 80%; width: 100%;"></div>
-                <div class="sources">
-                    <p>Source: <a
-                            href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a>
-                    </p>
-                </div>
+                <div id="rulesChartArea" style="height: 90%; width: 100%;"></div>
+                
             </div>
         </div>
         <div class="row spacer transition-short transition-end"></div>
@@ -128,6 +122,7 @@
 <script src="js/channelrankVis.js"></script>
 <script src="js/ytShorts.js"></script>
 <script src="js/engagementVis.js"></script>
+<script src="js/helpers.js"></script>
 <script src="js/main.js"></script>
 
 

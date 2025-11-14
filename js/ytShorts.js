@@ -97,7 +97,7 @@ class ShortsVis {
 
     }
 
-    renderVis() {
+    start() {
         let vis = this;
         vis.timer.restart((elapsed) => {
             vis.t = (elapsed / 1000).toFixed(2); // Ms to S
@@ -105,12 +105,18 @@ class ShortsVis {
         }); 
     }
 
-    resetVis() {
+    pause() {
+        let vis = this;
+        vis.timer.stop();
+
+        vis.updateVis();
+    }
+
+    reset() {
         let vis = this;
         vis.timer.stop();
         vis.t = 0.0;
-
-        vis.updateVis();
+        vis.start();
     }
 
     changeView() {
