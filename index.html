@@ -12,16 +12,13 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" id="title-card">
-            <div class="col">
-                <div class="header" id="title">
-                    <h1>Title</h1>
-                </div>
-                <div id="opening">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, debitis consequatur rerum distinctio ipsa laudantium! Aut aliquid necessitatibus libero sequi expedita quae qui facilis, vel recusandae eum. Minus, nemo aperiam.</p>
-                </div>
+        <div class="row header" id="title-card">
+            <div class="col" id="title-card-content">
+                <h1>Youtube</h1>
+                <p>------------------------------------------------------------</p>
             </div>
         </div>
+        <div class="row spacer transition-short"></div>
         <div class="row">
             <div class="col">
                 <h1> The Scale of Time spent on Youtube</h1>
@@ -29,7 +26,6 @@
                      Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
                 <br>In 2017, they had announced that, in total, people were watching a billion hours of Youtube each day. 
                 <br>Lets put that into perspective...
-            <!--<br>(made by Sean) -->
                 </p>
                 <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
                 <div id="shortsVisControls">
@@ -83,13 +79,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" id="eng-vis-wrapper" style="height: 71vh">
+            <div class="col" id="eng-vis-wrapper" style="height: 90vh">
                 <h1> Rules of Engagement</h1>
                 <p> Explore the relationship between views and engagement metrics on YouTube. Click on a video to open it!
-                <br>(made by Sean)</p>
+                </p>
                 <div id="engagementControls" style="display: inline;">
                     <p style="display: inline;"> Select Video Category: </p>
-                    <select id="categorySelector" class="form-select" style="width: 25%; display: inline;" onchange="updateEngagementCategory()">
+                    <select id="categorySelector" class="form-select" style="width: 25%; display: inline;"
+                        onchange="updateEngagementCategory()">
                         <option value="0">News & Politics</option>
                         <option value="1">Gaming</option>
                         <option value="2">Comedy</option>
@@ -108,13 +105,15 @@
                         <option value="15">Shows</option>
                     </select>
                 </div>
-                <div id="rulesChartArea" style="height: 100%; width: 100%;" ></div>
+                <div id="rulesChartArea" style="height: 80%; width: 100%;"></div>
                 <div class="sources">
-                    <p>Source: <a href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a></p>
+                    <p>Source: <a
+                            href="https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis">https://www.kaggle.com/datasets/cyberevil545/youtube-videos-data-for-ml-and-trend-analysis</a>
+                    </p>
                 </div>
-            <div class="col">
             </div>
         </div>
+        <div class="row spacer transition-short transition-end"></div>
     </div>
 <!-- JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
