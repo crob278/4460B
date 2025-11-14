@@ -188,11 +188,12 @@ div#shortsChartDiv {
     border-color: var(--secondary-color);
 }
 .btn-dark {
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-color);
     border-color: var(--tertiary-color);
+    color: var(--text-light);
 }
 .btn-dark:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border-color: var(--secondary-color);
 }
 
