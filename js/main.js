@@ -5,6 +5,7 @@ let ytDashVis,
     engagementVis,
     diceVis;
 
+
 // Load Data with Promises
 let promises = [
     d3.csv("data/youtube_data.csv").then(csvData => {
@@ -49,6 +50,7 @@ function initMainPage(allDataArray) {
     viewsVis = new PieChart('viewsPieChartDiv', allDataArray[0]);
 
     shortsVis = new ShortsVis('shortsChartDiv', allDataArray[0]);
+    shortsObserver.observe(document.getElementById('shortsChartDiv'));
 
     rankVis = new ChannelRank("rank-list", allDataArray[1]);
     rankVis.initVis();
@@ -78,9 +80,9 @@ function prepDataForRVis(csvData) {
 }
 
 // Accessors for YT Shorts Vis
-function startShortsTimer() { shortsVis.renderVis(); }
-function resetShortsVis() { shortsVis.resetVis(); }
-function changeShortsView() { shortsVis.changeView(); }
+function startShortsVis() { shortsVis.start(); }
+function pauseShortsVis() { shortsVis.pause(); }
+function resetShortsVis() { shortsVis.reset(); }
 
 
 // Accessors for Engagement Vis

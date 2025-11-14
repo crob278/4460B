@@ -16,39 +16,51 @@
     --background-color: #fffbff;
     --accent-color: #FFF0DA;
     --text-color: #291515;
-
+    --text-light: #fff8f7;
 }
 
 body {
     font-family: "Roboto", sans-serif;
     font-size: 12px;
     background-color: var(--background-color);
+
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
 .header {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    padding: 15px;
+    color: var(--text-light);
     text-align: center;
-    border-radius: 8px;
 } 
 
 #title-card {
-    margin-bottom: 20px;
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
-    background-color: var(--accent-color);
-    margin: auto;
-    padding: 10px 0 0 10px;
-    width: 90vw;
+    background-color: var(--primary-color);
+    height: 90vh;
+    width: 100vw;
+}
 
+#title-card-content {
+    position: relative;
+    height: fit-content;
+    justify-self: center;
+    text-align: center;
 
-    p {
-        font-size: 24px;
-        color: var(--text-color);
+    top: 40%;
+    width: 60%;
+    color: var(--text-light);
+
+    h1 {
+        font-size: 48px;
         padding: 10px 5vw 5vw 10px;
     }
-}
+    p {
+        justify-self: center;
+        font-size: 24px;
+        padding: 10px 5vw 5vw 10px;
+    }
+}  
 
 .row {
     display: flex;
@@ -58,10 +70,26 @@ body {
     padding: 10px;
 }
 
+.spacer {
+    width: 100vw;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.transition-short {
+    aspect-ratio: 1080 / 240;
+    background-image: url('../assets/layered-steps-red-1080x240.svg');
+}
+
+.transition-end {
+    margin-top: auto;
+    transform: rotate(180deg);
+}
 
 
 /* Vis Styling */
-
 #podium-frame {
     border: 2px black solid;
     border-radius: 10px;
@@ -160,11 +188,12 @@ div#shortsChartDiv {
     border-color: var(--secondary-color);
 }
 .btn-dark {
-    background-color: var(--tertiary-color);
+    background-color: var(--secondary-color);
     border-color: var(--tertiary-color);
+    color: var(--text-light);
 }
 .btn-dark:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border-color: var(--secondary-color);
 }
 
