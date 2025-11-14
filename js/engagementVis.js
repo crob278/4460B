@@ -56,7 +56,7 @@ class EngagementVis {
             .exponent(0.5)
             .range([vis.height, 0]);
 
-        vis.colorScale = d3.scaleSequentialLog(d3.interpolateMagma);
+        vis.colorScale = d3.scaleSequentialLog(d3.interpolateCubehelix("purple", "orange"));
 
         vis.r = d3.scaleSqrt()
             .range([3, 50]);
@@ -174,7 +174,7 @@ class EngagementVis {
             .attr("opacity", 0.8)
             .on("mouseover", function(event, d) {
                 d3.select(this)
-                    .attr("stroke", "white")
+                    .attr("stroke", "blue")
                     .attr("stroke-width", 2);
                 
                 // Tooltip
@@ -183,8 +183,8 @@ class EngagementVis {
                     .style("left", (event.pageX + 5) + "px") // TODO: Make sure it does not go off screen
                     .style("top", (event.pageY + 5) + "px")
                     .html(`<div id="tooltip-body">
-                            <a href="${d.url}" target="_blank"><strong>${d.title}</strong></a><br>
-                            <strong>Views:</strong> ${d.views}<br>
+                            <strong><a href="${d.url}">${d.title.toLocaleString()}</a></strong><br>
+                            <strong>Views:</strong> ${d.views.toLocaleString()}<br>
                             <strong>Like %:</strong> ${(d.likePercent * 100).toFixed(2)}%<br>
                             <strong>Comment %:</strong> ${(d.commentPercent * 100).toFixed(2)}%
                         </div>`);
