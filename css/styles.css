@@ -84,8 +84,15 @@ body {
 }
 
 .transition-end {
-    margin-top: auto;
+    /* margin-top: auto; */
     transform: rotate(180deg);
+}
+
+.footer {
+    color: var(--text-light);
+    text-align: left;
+    background-color: var(--primary-color);
+    width: 100vw;
 }
 
 
