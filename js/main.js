@@ -86,12 +86,7 @@ function resetShortsVis() { shortsVis.reset(); }
 
 
 // Accessors for Engagement Vis
-function updateEngagementCategory() { 
-    let newCategory = document.getElementById('categorySelector').value;
-    engagementVis.changeCategory(newCategory);
-}
-
-function updateEngagementThreshold() { 
-    let newThreshold = +document.getElementById('viewThreshold').value;
-    engagementVis.changeViewThreshold(newThreshold);
+function changeEngCategory() { 
+    let categorySelector = document.getElementById('categorySelector');
+    engagementVis.changeCategory(categorySelector.value);
 }
