@@ -136,14 +136,14 @@ class ShortsVis {
         vis.timerBar.attr('height', vis.t * vis.scaleFactor);
 
         let shortsTime = Math.sqrt(vis.t * vis.shortsScale).toFixed(2); 
-        vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${shortsTime} hrs`);
+        vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${(vis.t * vis.shortsScale).toFixed(2)} hrs`);
         vis.shortsTimerBar.attr('height', (shortsTime))
             .attr('width', shortsTime);
 
         let videoTime = Math.sqrt(vis.t * vis.videoScale).toFixed(2);
-        vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${videoTime} hrs`);
-        vis.videoTimerBar.attr('width', (videoTime))
-            .attr('height', videoTime);
+        vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${(vis.t * vis.videoScale).toFixed(2)} hrs`);
+        vis.videoTimerBar.attr('height', (videoTime))
+            .attr('width', videoTime);
 
     }
 
