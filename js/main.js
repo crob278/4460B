@@ -80,9 +80,9 @@ function prepDataForRVis(csvData) {
 }
 
 // Accessors for YT Shorts Vis
-function startShortsVis() { shortsVis.start(); }
-function pauseShortsVis() { shortsVis.pause(); }
-function resetShortsVis() { shortsVis.reset(); }
+function startShortsVis() { shortsVis.start() }
+function pauseShortsVis() { shortsVis.pause() }
+function resetShortsVis() { shortsVis.reset() }
 
 
 // Accessors for Engagement Vis
