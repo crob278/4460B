@@ -1,26 +1,27 @@
 // Observer for starting shorts animation when in view
-const shortsObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            startShortsVis();
-            observer.unobserve(entry.target); // Triggers once
-        }
-    });
-}, { threshold: 0.3 });
+const options = { threshold: 0.3 };
+const shortStart = (element, observer) => {
+    let vis = element[0]; // Should only be 1 element
+    if (vis.isIntersecting) {
+        startShortsVis();
+        observer.unobserve(vis.target);
+    }
+}
+const shortsObserver = new IntersectionObserver(shortStart, options);
 
-// Event Listener to swap Pause & Reset buttons
+// Replace element 1 with element 2 (must already exist and 2 need d-none as a class)
+const elementSwap = (e1, e2) => {
+    e1.classList.add('d-none');
+    e2.classList.remove('d-none');
+}
+
+// Event listener on DOM Load
 document.addEventListener('DOMContentLoaded', () => {
-    const pauseButton = document.getElementById('pause-button');
-    const resetButton = document.getElementById('reset-button');
+    let pauseBtn = document.getElementById('pause-button');
+    let resetBtn = document.getElementById('reset-button');
 
-    pauseButton.addEventListener('click', () => {
-        pauseButton.classList.add('d-none'); 
-        resetButton.classList.remove('d-none');
-    });
-    resetButton.addEventListener('click', () => {
-        resetButton.classList.add('d-none'); 
-        pauseButton.classList.remove('d-none');
-    });
+    pauseBtn.addEventListener('click', () => {elementSwap(pauseBtn, resetBtn)});
+    resetBtn.addEventListener('click', () => {elementSwap(resetBtn, pauseBtn)});
 });
 
 
