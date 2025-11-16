@@ -37,10 +37,10 @@ class ShortsVis {
         vis.shortsScale = 2e11 * 15; // Seconds on shorts per day
         //vis.videoScale = 1e9 * 60 * 60; // Seconds on regular videos per day
 
-        vis.shortsScale /= (24 * 60 * 60); // per second
+        vis.shortsScale /= (24 * 60 * 60); // Seconds per day to seconds per second
         //vis.videoScale /= (24 * 60 * 60);
 
-        vis.shortsScale /= (60 * 60); // convert to hours
+        vis.shortsScale /= (60 * 60 * 24); // convert to days
         //vis.videoScale /= (60 * 60); 
 
 
@@ -72,7 +72,7 @@ class ShortsVis {
 
         vis.timerContextLabel = vis.timerGroup.append('text')
             .attr('x', 12)
-            .attr('y', vis.scaleFactor + 5 + 3)
+            .attr('y', vis.scaleFactor + 10)
             .attr('text-anchor', 'start')
             .text('One Second');
 
@@ -104,9 +104,9 @@ class ShortsVis {
 
         vis.shortsContextLabel = vis.shortsTimerGroup.append('text')
             .attr('x', Math.sqrt(vis.shortsScale) + 2)
-            .attr('y', vis.scaleFactor + 5 + 3) 
+            .attr('y', vis.scaleFactor + 13) 
             .attr('text-anchor', 'start')
-            .text('(The Scale IS WRONG OH GOD)');
+            .text('24 hours');
 
         
 
