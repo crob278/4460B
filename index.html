@@ -44,13 +44,23 @@
         </div>
         <div class="row_Cr">
             <div class="colLC">
-                <h1> Channel Popularity By Country - Per Million Subcribers - CR </h1>
+                <h1> Popular Channels Across the World </h1>
                 <div id="rank-list" style="height: 71vh; width: 100%;"></div>
                 <div id="rankTooltip" class="tooltip"></div>
             </div>
-            <div class="colRC">
-                <div id="heatmap-chart" style="height: 71vh; width: 100%;" ></div>
-            </div>
+        </div>
+        <div class="row">
+            <h1> Hashtag Associations </h1>
+            <p style="display:inline;">Select Network View</p>
+            <select id="networkSelector" class="form-select" style="width: 36%; display:inline;"
+                    onchange="updateNetworkVis()">
+                <option value="frequency">Top Hashtags By Frequency</option>
+                <option value="views">Top Hashtags By Views</option>
+                <option value="top10_usage">Top 10 Videos' Hashtag Association By Freq.</option>
+                <option value="top10_views">Top 10 Videos' Hashtag Association By Usage</option>
+            </select>
+            <div id="hashtag-association" style="height: 71vh; width: 100%;"></div>
+            <div id="hashtagTooltip" class="tooltip"></div>
         </div>
         <div class="row">
             <div class="col">
@@ -145,7 +155,7 @@
     <script src="https://d3js.org/topojson.v2.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
 <!-- Our Scripts -->
-<script src="js/heatmapVis.js"></script>
+<script src="js/networkVis.js"></script>
 <script src="js/pieChart.js"></script>
 <script src="js/ytDashboard.js"></script>
 <script src="js/channelrankVis.js"></script>

@@ -3,7 +3,7 @@ let ytDashVis,
     rankVis,
     shortsVis,
     engagementVis,
-    diceVis;
+    networkVis
 
 
 // Load Data with Promises
@@ -35,6 +35,7 @@ let promises = [
         return prepDataForRVis(csvData);
     }),
     d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"),
+    d3.json("data/hashtag_vis_db/graph_data.json")
 ];
 
 Promise.all(promises)
@@ -54,11 +55,11 @@ function initMainPage(allDataArray) {
     shortsObserver.observe(document.getElementById('shortsChartDiv'));
 
     rankVis = new ChannelRank("rank-list", allDataArray[1], allDataArray[2]);
+    //console.log( allDataArray[3]);
+    networkVis = new NetworkVis("hashtag-association", allDataArray[3]);
 
     engagementVis = new EngagementVis('rulesChartArea', allDataArray[0]);
 
-    heatmapVis = new HeatmapVis('heatmap-chart', allDataArray[0]);
-    heatmapVis.initVis();
 
 }
 
@@ -116,4 +117,10 @@ function resetShortsVis() { shortsVis.reset() }
 function changeEngCategory() { 
     let categorySelector = document.getElementById('categorySelector');
     engagementVis.changeCategory(categorySelector.value);
+}
+
+// Accessors for Network Vis
+function updateNetworkVis() {
+    let selectedFilter = document.getElementById('networkSelector').value;
+    networkVis.changeFilter(selectedFilter);
 }

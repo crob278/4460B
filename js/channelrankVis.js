@@ -104,7 +104,7 @@ class ChannelRank {
                 totalSubs: info.totalSubs,
                 topChannels: info.topChannels,
             };
-            console.log(vis.countryInfo[country]);
+            //console.log(vis.countryInfo[country]);
         });
 
         vis.updateVis()

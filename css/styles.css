@@ -369,6 +369,23 @@ div#shortsChartDiv {
     transition: opacity 0.2s;
 }
 
+#hashtagTooltip{
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#hashtag-association svg {
+    display: block;
+    margin: auto;
+}
+
 #viewsPieChartDiv{
     height: 71vh;
     width: 100%;
