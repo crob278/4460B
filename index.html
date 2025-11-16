@@ -44,7 +44,8 @@
         <div class="row_Cr">
             <div class="colLC">
                 <h1> Channel Popularity By Country - Per Million Subcribers - CR </h1>
-                <div id="rank-list"></div>
+                <div id="rank-list" style="height: 71vh; width: 100%;"></div>
+                <div id="rankTooltip" class="tooltip"></div>
             </div>
             <div class="colRC">
                 <div id="heatmap-chart" style="height: 71vh; width: 100%;" ></div>
@@ -127,7 +128,9 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
-
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <script src="https://d3js.org/d3-geo.v1.min.js"></script>
 <!-- Our Scripts -->
 <script src="js/heatmapVis.js"></script>
 <script src="js/pieChart.js"></script>
