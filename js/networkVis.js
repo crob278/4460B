@@ -157,13 +157,11 @@ class NetworkVis {
             .join("line")
             .attr("stroke-width", 1)
 
-        let node = vis.chartGroup.append("g")
-            .selectAll("circle")
-            .data(nodes)
-            .join("circle")
-            .attr("r", d => d.radius || 4)
-            .attr("fill", d => (d.group.includes("video") ? vis.colors[1] : vis.colors[0]))
 
+        let nodeGroup = vis.chartGroup.selectAll(".node-group")
+            .data(nodes)
+            .join("g")
+            .attr("class", "node-group")
             .call(
                 d3.drag()
                     .on("start", (event, d) => {
@@ -183,8 +181,11 @@ class NetworkVis {
                         }
                         d.fx = null;
                         d.fy = null;
-                    }) )
+                    }) );
 
+        let node = nodeGroup.append("circle")
+            .attr("r", d => d.radius || 4)
+            .attr("fill", d => (d.group.includes("video") ? vis.colors[1] : vis.colors[0]))
             .on("mouseover", function (event, d) {
                 d3.select(this)
                     .attr("stroke", "black")
@@ -223,6 +224,15 @@ class NetworkVis {
                 if (d.url) window.open(d.url, "_blank");
             });
 
+        let labels = nodeGroup
+            .filter(d => d.group === "hashtag")
+            .append("text")
+            .text(d => `#${d.label}`)
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .attr("font-size", "8px")
+            .attr("fill", "black")
+
         simulation.on("tick", () => {
             link
                 .attr("x1", d => d.source.x)
@@ -230,9 +240,7 @@ class NetworkVis {
                 .attr("x2", d => d.target.x)
                 .attr("y2", d => d.target.y);
 
-            node
-                .attr("cx", d => d.x)
-                .attr("cy", d => d.y);
+            nodeGroup.attr("transform", d => `translate(${d.x}, ${d.y})`);
         });
 
         function dragStarted(event) {
