@@ -9,10 +9,9 @@ class ShortsVis {
     constructor(parentElement, data) {
         this.parentElement = parentElement;
         this.data = data | null;
-        this.view = false; // false = shorts, true = regular videos
         this.timer = null;
         this.shortsFactor;
-        this.videoFactor;
+        //this.videoFactor;
         this.t = 0;
 
         this.initVis();
@@ -36,13 +35,13 @@ class ShortsVis {
 
         // Hardcoding values for how fast shorts vs regular videos are watched
         vis.shortsScale = 2e11 * 15; // Seconds on shorts per day
-        vis.videoScale = 1e9 * 60 * 60; // Seconds on regular videos per day
+        //vis.videoScale = 1e9 * 60 * 60; // Seconds on regular videos per day
 
         vis.shortsScale /= (24 * 60 * 60); // per second
-        vis.videoScale /= (24 * 60 * 60);
+        //vis.videoScale /= (24 * 60 * 60);
 
         vis.shortsScale /= (60 * 60); // convert to hours
-        vis.videoScale /= (60 * 60); 
+        //vis.videoScale /= (60 * 60); 
 
 
         vis.scaleFactor = vis.height / 60;
@@ -62,6 +61,20 @@ class ShortsVis {
             .attr('height', 1)
             .attr('fill', 'red');
 
+        // Banana for scale
+        vis.timerContext = vis.timerGroup.append('line')
+            .attr('x1', -1)
+            .attr('y1', vis.scaleFactor + 5)
+            .attr('x2', 12)
+            .attr('y2', vis.scaleFactor + 5)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1);
+
+        vis.timerContextLabel = vis.timerGroup.append('text')
+            .attr('x', 12)
+            .attr('y', vis.scaleFactor + 5 + 3)
+            .attr('text-anchor', 'start')
+            .text('One Second');
 
         vis.shortsTimerGroup = vis.svg.append('g')
             .attr('class', 'shortsTimerGroup')
@@ -79,22 +92,40 @@ class ShortsVis {
             .attr('height', 0)
             .attr('fill', 'red'); // overriden in css
 
-        vis.videoTimerGroup = vis.svg.append('g')
-            .attr('class', 'videoTimerGroup')
-            .attr('transform', `translate(170, 20)`)
-            .attr('visibility', 'hidden');
-            
-        vis.videoTimerText = vis.videoTimerGroup.append('text')
-            .attr('class', 'timerText videoTimerText')
-            .text('Collective hours spent watching youtube videos: 0.0 hrs');
-
-        vis.videoTimerBar = vis.videoTimerGroup.append('rect')
-            .attr('class', 'timerRect videoTimerRect')
+        // 2d Banana for scale 
+        vis.shortsContext = vis.shortsTimerGroup.append('rect')
+            .attr('x', 0)
             .attr('y', 10)
-            .attr('width', 0)
-            .attr('height', 0)
-            .attr('fill', 'red');
+            .attr('width', Math.sqrt(vis.shortsScale))
+            .attr('height', Math.sqrt(vis.shortsScale))
+            .attr('fill', 'none')
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1);
 
+        vis.shortsContextLabel = vis.shortsTimerGroup.append('text')
+            .attr('x', Math.sqrt(vis.shortsScale) + 2)
+            .attr('y', vis.scaleFactor + 5 + 3) 
+            .attr('text-anchor', 'start')
+            .text('(The Scale IS WRONG OH GOD)');
+
+        
+
+        // vis.videoTimerGroup = vis.svg.append('g')
+        //     .attr('class', 'videoTimerGroup')
+        //     .attr('transform', `translate(170, 20)`)
+        //     .attr('visibility', 'hidden');
+            
+        // vis.videoTimerText = vis.videoTimerGroup.append('text')
+        //     .attr('class', 'timerText videoTimerText')
+        //     .text('Collective hours spent watching youtube videos: 0.0 hrs');
+
+        // vis.videoTimerBar = vis.videoTimerGroup.append('rect')
+        //     .attr('class', 'timerRect videoTimerRect')
+        //     .attr('y', 10)
+        //     .attr('width', 0)
+        //     .attr('height', 0)
+        //     .attr('fill', 'red');
+    
     }
 
     start() {
@@ -137,13 +168,13 @@ class ShortsVis {
 
         let shortsTime = Math.sqrt(vis.t * vis.shortsScale).toFixed(2); 
         vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${(vis.t * vis.shortsScale).toFixed(2)} hrs`);
-        vis.shortsTimerBar.attr('height', (shortsTime))
-            .attr('width', shortsTime);
+        vis.shortsTimerBar.attr('height', (shortsTime * vis.scaleFactor))
+            .attr('width', shortsTime * vis.scaleFactor);
 
         let videoTime = Math.sqrt(vis.t * vis.videoScale).toFixed(2);
         vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${(vis.t * vis.videoScale).toFixed(2)} hrs`);
-        vis.videoTimerBar.attr('height', (videoTime))
-            .attr('width', videoTime);
+        vis.videoTimerBar.attr('height', (videoTime * vis.scaleFactor))
+            .attr('width', videoTime * vis.scaleFactor);
 
     }
 
