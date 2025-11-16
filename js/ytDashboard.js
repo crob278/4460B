@@ -118,7 +118,7 @@ class YtDashboard {
 
             const percent = seconds / 600;
             tooltip
-                .style("left", `${percent * 600 + 20}px`)
+                .style("left", `${percent * 600 - 20}px`)
                 .text(`Length: ${timeLabel}`);
 
             vis.updateBars(seconds);
@@ -332,6 +332,29 @@ class YtDashboard {
             });
 
         nodes.exit().remove();
+    }
+
+    // Allows for it to animate as it comes into view
+    render() {
+        let vis = this;
+
+        let slider = d3.select("#ytSlider");
+        let tooltip = d3.select("#ytTooltip");
+
+        let seconds = +slider.property("value");
+        let minutes = Math.floor(seconds / 60);
+        let secs = String(seconds % 60).padStart(2, "0");
+        let timeLabel = `${minutes}:${secs}`;
+
+        let percent = seconds / 600;
+        tooltip
+            .style("left", `${percent * 600 - 20}px`)
+            .text(`Length: ${timeLabel}`);
+
+
+        vis.updateBars(seconds);
+        vis.updateTreeMap(seconds);
+
     }
 }
 

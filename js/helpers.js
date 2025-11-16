@@ -7,6 +7,14 @@ const shortStart = (element, observer) => {
         observer.unobserve(vis.target);
     }
 }
+const dashRender = (element, observer) => {
+    let vis = element[0];
+    if (vis.isIntersecting) {
+        renderDash();
+        observer.unobserve(vis.target);
+    }
+}
+const dashObserver = new IntersectionObserver(dashRender, options);
 const shortsObserver = new IntersectionObserver(shortStart, options);
 
 // Replace element 1 with element 2 (must already exist and 2 need d-none as a class)

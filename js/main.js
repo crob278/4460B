@@ -48,6 +48,7 @@ function initMainPage(allDataArray) {
     // console.log(allDataArray);
 
     ytDashVis = new YtDashboard("ytDashDiv", allDataArray[0]);
+    dashObserver.observe(document.getElementById('ytDashDiv'));
 
     viewsVis = new PieChart('viewsPieChartDiv', allDataArray[0]);
 
@@ -106,6 +107,9 @@ function convertToNumber(str) {
     if (str.endsWith("K")) return parseFloat(str) * 1_000;
     return parseFloat(str) || 0;
 }
+
+// Accessor for rendering YT Dashboard
+function renderDash() { ytDashVis.render() }
 
 // Accessors for YT Shorts Vis
 function startShortsVis() { shortsVis.start() }
