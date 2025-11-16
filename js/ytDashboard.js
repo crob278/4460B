@@ -182,7 +182,6 @@ class YtDashboard {
         );
 
         bars.on("mouseover", function(event, d) {
-            // Select the corresponding rectangle in the tree map
             vis.treeSvg.selectAll(".tree-rect")
                 .filter(r => r.data.name === d.category)
                 .transition().duration(200)
@@ -196,7 +195,7 @@ class YtDashboard {
                     .transition().duration(200)
                     .attr("stroke-width", 1)
                     .attr("stroke", "#fff")
-                    .attr("fill", r => d3.interpolateReds(r.value / d3.max(vis.displayData, x => x.views)))
+                    .attr("fill", r => d3.interpolateReds(r.data.intensity))
                     .attr("width", r => r.x1 - r.x0)
                     .attr("height", r => r.y1 - r.y0);
             });
@@ -208,36 +207,54 @@ class YtDashboard {
         const fraction = seconds / 600; // progress from 0 to 1
         const formatComma = d3.format(",");
 
-        // Scale data for this second
-        const scaledData = vis.displayData.map(d => ({
-            name: d.category,
-            value: d.views * fraction
-        }));
-
-        const totalMax = d3.sum(vis.displayData, d => d.views); // total full value
-        const currentTotal = d3.sum(scaledData, d => d.value);  // current scaled value
 
         const maxVal = d3.max(vis.displayData, d => d.views);
 
-        // Build hierarchy and compute treemap layout
+        // const totalViews = d3.sum(vis.displayData, d => d.views);
+
+        const mapArea = this.treeHeight * this.treeWidth;
+
+        const scaledData = vis.displayData.map(d => {
+            if (seconds === 0) {
+                return { name: d.category, value: 0, intensity: 0, views: d.views };
+            }
+
+            const relative = d.views / maxVal;
+            const growthFactor = Math.pow(fraction, 1 - relative);
+
+            return {
+                name: d.category,
+                value: d.views * growthFactor,
+                intensity: relative,
+                views: d.views * fraction
+            };
+        });
+
+
+        //build map
         const root = d3.hierarchy({ children: scaledData }).sum(d => d.value);
         vis.treemap(root);
 
-        // Compute scaling factor to center the rectangles and grow proportionally
-        const k = Math.sqrt(currentTotal / totalMax); // scale factor based on fraction
-        const tx = (1 - k) / 2 * vis.treeWidth;
-        const ty = (1 - k) / 2 * vis.treeHeight;
+        const leaves = root.leaves();
 
-        const leaves = root.leaves().map(d => ({
-            ...d,
-            x0: tx + (d.x0) * k,
-            x1: tx + (d.x1) * k,
-            y0: ty + (d.y0) * k,
-            y1: ty + (d.y1) * k
-        }));
+        // Compute scaling factor to grow proportionally
+        // const k = (totalMax > 0) ? Math.sqrt(currentTotal / totalMax) : 0;
+        //
+        // const tx = 0;
+        // const ty = 0;
+        //
+        // const leaves = root.leaves().map(d => ({
+        //     ...d,
+        //     x0: tx + (d.x0) * k,
+        //     x1: tx + (d.x1) * k,
+        //     y0: ty + (d.y0) * k,
+        //     y1: ty + (d.y1) * k
+        // }));
+
 
         const nodes = vis.treeSvg.selectAll("g.node")
             .data(leaves, d => d.data.name);
+
 
         // Enter
         const nodeEnter = nodes.enter().append("g")
@@ -246,8 +263,8 @@ class YtDashboard {
         nodeEnter.append("rect")
             .attr("class", "tree-rect")
             .attr("data-name", d => d.data.name)
-            .attr("x", vis.treeWidth / 2)
-            .attr("y", vis.treeHeight / 2)
+            .attr("x", 0)
+            .attr("y", 0)
             .attr("width", 0)
             .attr("height", 0)
             .attr("fill", "#ff9999")
@@ -267,9 +284,13 @@ class YtDashboard {
             .transition().duration(500).ease(d3.easeCubicOut)
             .attr("x", d => d.x0)
             .attr("y", d => d.y0)
+            // .attr("width", d => (d.data.value > 0 ? d.x1 - d.x0 : 0))
+            // .attr("height", d => (d.data.value > 0 ? d.y1 - d.y0 : 0))
             .attr("width", d => d.x1 - d.x0)
             .attr("height", d => d.y1 - d.y0)
-            .attr("fill", d => d3.interpolateReds(d.value / maxVal));
+            .attr("fill", d => (d.data.value > 0 ? d3.interpolateReds(d.data.intensity) : "transparent"));
+
+
 
         // Animate text
         allNodes.select("text")
@@ -278,18 +299,24 @@ class YtDashboard {
             .attr("y", d => d.y0 + (d.y1 - d.y0) / 2)
             .attr("text-anchor", "middle")
             .attr("alignment-baseline", "middle")
-            .attr("font-size", d => Math.min((d.x1 - d.x0) / d.data.name.length, 16)) // max 16px
+            .attr("font-size", d => Math.min((d.x1 - d.x0) / d.data.name.length, 16))
             .text(d => (d.x1 - d.x0 > 40 ? d.data.name : ""));
 
+
+        // console.log(scaledData);
+
+
+        //tooltip textbox
         const tooltip = d3.select("#treeTooltip");
+        const currentTotal = d3.sum(scaledData, d => d.views);
 
         allNodes.select("rect")
             .on("mouseover", function(event, d) {
-                const percent = ((d.value / currentTotal) * 100).toFixed(1);
+                const percent = currentTotal > 0 ? ((d.data.views / currentTotal) * 100).toFixed(1) : 0;
                 tooltip.style("opacity", 1)
                     .html(`
                     <strong>${d.data.name}</strong><br>
-                    Views: ${formatComma(Math.round(d.value))}<br>
+                    Views: ${formatComma(Math.round(d.data.views))}<br>
                     ${percent}% of total views
                 `)
                     .style("left", `${event.pageX + 10}px`)
@@ -303,7 +330,6 @@ class YtDashboard {
             .on("mouseout", function() {
                 tooltip.style("opacity", 0);
             });
-
 
         nodes.exit().remove();
     }
