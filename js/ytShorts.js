@@ -56,7 +56,7 @@ class ShortsVis {
 
         vis.timerBar = vis.timerGroup.append('rect')
             .attr('class', 'timerRect')
-            .attr('y', 5) 
+            .attr('y', 10) 
             .attr('width', 10)
             .attr('height', 1)
             .attr('fill', 'red');
@@ -64,15 +64,15 @@ class ShortsVis {
         // Banana for scale
         vis.timerContext = vis.timerGroup.append('line')
             .attr('x1', -1)
-            .attr('y1', vis.scaleFactor + 5)
+            .attr('y1', vis.scaleFactor + 10)
             .attr('x2', 12)
-            .attr('y2', vis.scaleFactor + 5)
+            .attr('y2', vis.scaleFactor + 10)
             .attr('stroke', 'black')
             .attr('stroke-width', 1);
 
         vis.timerContextLabel = vis.timerGroup.append('text')
             .attr('x', 12)
-            .attr('y', vis.scaleFactor + 10)
+            .attr('y', vis.scaleFactor + 15)
             .attr('text-anchor', 'start')
             .text('One Second');
 
@@ -167,14 +167,14 @@ class ShortsVis {
         vis.timerBar.attr('height', vis.t * vis.scaleFactor);
 
         let shortsTime = Math.sqrt(vis.t * vis.shortsScale).toFixed(2); 
-        vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${(vis.t * vis.shortsScale).toFixed(2)} hrs`);
+        vis.shortsTimerText.text(`Collective hours spent watching youtube shorts: ${(vis.t * vis.shortsScale * 24).toFixed(2)} hrs`);
         vis.shortsTimerBar.attr('height', (shortsTime * vis.scaleFactor))
             .attr('width', shortsTime * vis.scaleFactor);
 
-        let videoTime = Math.sqrt(vis.t * vis.videoScale).toFixed(2);
-        vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${(vis.t * vis.videoScale).toFixed(2)} hrs`);
-        vis.videoTimerBar.attr('height', (videoTime * vis.scaleFactor))
-            .attr('width', videoTime * vis.scaleFactor);
+        // let videoTime = Math.sqrt(vis.t * vis.videoScale).toFixed(2);
+        // vis.videoTimerText.text(`Collective hours spent watching youtube videos: ${(vis.t * vis.videoScale).toFixed(2)} hrs`);
+        // vis.videoTimerBar.attr('height', (videoTime * vis.scaleFactor))
+        //     .attr('width', videoTime * vis.scaleFactor);
 
     }
 
