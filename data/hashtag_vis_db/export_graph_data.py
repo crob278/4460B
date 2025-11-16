@@ -123,24 +123,6 @@ for hashtag_id, videos in videos_for_hashtags.items():
             })
             video_nodes_added.add(vid)
 
-# for (vid, title, url, views) in top_videos:
-#     if vid not in video_nodes_added:
-#         full_tags = hashtags_for_top_videos.get(vid,[])
-
-#         top_used_tags = [t for t in full_tags if t[0] in top_used_set]
-#         top_viewed_tags = [t for t in full_tags if t[0] in top_viewed_set]
-#         nodes.append({
-#             "id" : f"video_{vid}",
-#             "label" : title,
-#             "url" : url,
-#             "views" : views,
-#             "group" : "video_top",
-#             "all_hashtags" : [{"id" : t[0], "name" : t[1]} for t in full_tags],
-#             "top_used_hashtags" : [{"id" : t[0], "name" : t[1]} for t in top_used_tags],
-#             "top_viewed_hashtags" : [{"id" : t[0], "name" : t[1]} for t in top_viewed_tags]
-#         })
-#         video_nodes_added.add(vid)
-
 for (vid, title, url, views) in top_videos:
     full_tags = hashtags_for_top_videos.get(vid,[])
     top_used_tags = [t for t in full_tags if t[0] in top_used_set]
