@@ -31,9 +31,10 @@ let promises = [
         console.log("Youtube Data Loaded"); 
         return csvData;
     }),
-    d3.csv("data/channelrank_data.csv").then(csvData => {
+    d3.csv("data/youtube_channel_popularity.csv").then(csvData => {
         return prepDataForRVis(csvData);
-    })
+    }),
+    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json"),
 ];
 
 Promise.all(promises)
@@ -52,8 +53,7 @@ function initMainPage(allDataArray) {
     shortsVis = new ShortsVis('shortsChartDiv', allDataArray[0]);
     shortsObserver.observe(document.getElementById('shortsChartDiv'));
 
-    rankVis = new ChannelRank("rank-list", allDataArray[1]);
-    rankVis.initVis();
+    rankVis = new ChannelRank("rank-list", allDataArray[1], allDataArray[2]);
 
     engagementVis = new EngagementVis('rulesChartArea', allDataArray[0]);
 
@@ -65,18 +65,45 @@ function initMainPage(allDataArray) {
 // Data Preparation for Ranking Vis
 function prepDataForRVis(csvData) {
     let preparedData = {
-        countries: [],
         rankings: {}
     };
 
-    preparedData.countries = csvData.columns;
+   csvData.forEach(row => {
+       let country = row.Countries.trim();
 
-    preparedData.countries.forEach(country => {
-        const rankings = csvData.map(row => row[country]).filter(d => d && d.trim() !== "");
-        preparedData.rankings[country] = rankings;
-    })
+       let channels = row.Channels
+           .replace(/[\[\]]/g, "")
+           .split(",")
+           .map(d => d.trim());
 
-    return preparedData;
+       let subscribers = row.Subscribers
+           .replace(/[\[\]]/g, "")
+           .split(",")
+           .map(d => convertToNumber(d.trim()));
+
+       let paired = channels.map((c, i) => ({
+           name: c,
+           subs: subscribers[i] || 0
+       }));
+
+       paired.sort((a, b) => b.subs - a.subs);
+
+       let totalSubs = paired.reduce((a, b) => a + b.subs, 0);
+
+       preparedData.rankings[country] = {
+           country: country,
+           topChannels: paired,
+           totalSubs: totalSubs
+       };
+   });
+
+   return preparedData;
+}
+
+function convertToNumber(str) {
+    if (str.endsWith("M")) return parseFloat(str) * 1_000_000;
+    if (str.endsWith("K")) return parseFloat(str) * 1_000;
+    return parseFloat(str) || 0;
 }
 
 // Accessors for YT Shorts Vis
