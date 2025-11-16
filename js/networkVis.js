@@ -2,7 +2,7 @@ class NetworkVis {
     constructor(parentElement, graphData ) {
         this.parentElement = parentElement;
         this.graphData = graphData;
-        this.colors = ['#df2323ff', '#8a8d9d', '#000000']; //color for hashtag nodes, color for video nodes, color for links
+        this.colors = ['#df2323ff', '#dbdde8ff', '#000000']; //color for hashtag nodes, color for video nodes, color for links
         this.currentFilter = "frequency";
         this.initVis();
     }
@@ -192,6 +192,7 @@ class NetworkVis {
                     .attr("stroke-width", 2);
                 vis.tooltip
                     .style("opacity", 1)
+                    .style("width", "auto")
                     .html(
                         `
                         <strong>${d.label}</strong>
