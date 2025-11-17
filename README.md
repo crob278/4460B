@@ -1,5 +1,5 @@
 ## Algorithm Folklore: What is Truly Involved in Youtube Popularity?
-Link: [(Github Pages](https://crob278.github.io/4460B/)
+Link: [Github Pages](https://crob278.github.io/4460B/)
 Video: [Youtube Link](https://youtu.be/ugNi9JWuwLE)
 
 This is an exploration of what metrics are important or unimportant Youtube popularity in the modern age told in a way that challenges commonly held assumptions, sometimes referenced as "Algorithm Folklore."
