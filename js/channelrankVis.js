@@ -6,7 +6,7 @@ class ChannelRank {
         this.rankData = rankData;
 
         // define colors
-        this.colors = ['#ffd3c1ff', '#ffafa6ff', '#ff908dff', '#f76363ff', '#eb4848ff', '#ff0000ff']
+        this.colors = ['#ffd3c1ff', '#ffafa6ff', '#ff908dff', '#f76363ff']
         this.initVis()
     }
 
@@ -18,13 +18,11 @@ class ChannelRank {
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
-        // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
             .attr("width", vis.width)
             .attr("height", vis.height)
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
-        // add title
         vis.svg.append('g')
             .attr('class', 'title')
             .attr('id', 'map-title')
@@ -32,6 +30,10 @@ class ChannelRank {
             .text('Popular Channels Globaly')
             .attr('transform', `translate(${vis.width / 2}, 20)`)
             .attr('text-anchor', 'middle');
+
+        vis.legendGroup = vis.svg.append('g')
+            .attr('class', 'legend-group')
+            .attr("transform", `translate(30, ${vis.height - 80})`);
 
 
         vis.projection = d3.geoOrthographic()
@@ -169,12 +171,68 @@ class ChannelRank {
                     .style("display", "none");
 
             });
+        vis.updateLegend();
     }
 
     formatSubs(subs) {
         if (subs >= 1e6) return (subs / 1e6).toFixed(2) + "M";
         if (subs >= 1e3) return (subs / 1e3).toFixed(2) + "K";
         return subs;
+    }
+
+    updateLegend() {
+        let vis = this;
+
+        vis.legendGroup.selectAll("*").remove();
+
+        let legend_width = 160;
+        let legend_height = 10;
+
+        let definition = vis.svg.append("defs");
+
+        let gradient = definition.append("linearGradient")
+            .attr("id", "subGradient")
+            .attr("x1", "0%")
+            .attr("y1", "0%")
+            .attr("x2", "100%")
+            .attr("y2", "0%");
+
+        vis.colors.forEach((color, i) => {
+            gradient.append("stop")
+                .attr("offset", `${(i / (vis.colors.length - 1)) * 100}%`)
+                .attr("stop-color", color);
+        });
+
+        vis.legendGroup.append("rect")
+            .attr("width", legend_width)
+            .attr("height", legend_height)
+            .style("fill", "url(#subGradient)")
+            .style("stroke", "black")
+            .style("stroke-width", 0.5)
+            .attr("rx", 3)
+            .attr("ry", 3);
+
+        vis.legendGroup.append("text")
+            .attr("x", -30)
+            .attr("y", legend_height + 15)
+            .attr("font-size", "10px")
+            .attr("fill", "black")
+            .text("Least total subscribers")
+
+        vis.legendGroup.append("text")
+            .attr("x", legend_width + 100)
+            .attr("y", legend_height + 15)
+            .attr("font-size", "10px")
+            .attr("fill", "black")
+            .attr("text-anchor", "end")
+            .text("Most total Subscribers")
+
+        vis.legendGroup.append("text")
+            .attr("x", 30)
+            .attr("y", -5)
+            .attr("font-size", "12px")
+            .attr("fill", "black")
+            .text("Total Subscribers")
     }
 
 }
