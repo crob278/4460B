@@ -18,6 +18,10 @@ class NetworkVis {
             .attr("width", vis.width)
             .attr("height", vis.height)
 
+        vis.legendGroup = vis.svg.append("g")
+            .attr("class", "legend-group")
+            .attr("transform", `translate(20, ${vis.height - 90})`)
+
         vis.zoom = d3.zoom()
             .scaleExtent([0.3, 5])
             .on("zoom", (event) => {
@@ -263,11 +267,80 @@ class NetworkVis {
             event.subject.fx = null;
             event.subject.fy = null;
         }
+        vis.updateLegend();
     }
 
     changeFilter(newFilter) {
         let vis = this;
         vis.currentFilter = newFilter;
         vis.wrangleData();
+        vis.updateLegend();
+    }
+
+    updateLegend() {
+        let vis = this;
+
+        vis.legendGroup.selectAll("*").remove();
+
+        let hashtagScale = "";
+        let videoScale = "";
+        let description = "";
+
+        if (vis.currentFilter === "frequency") {
+            hashtagScale = "scaled by usage count";
+            videoScale = "scaled by views";
+            description = "Edges represent hashtag -> video relationship";
+        } else if (vis.currentFilter === "views") {
+            hashtagScale = "scaled by view count";
+            videoScale = "scaled by views";
+            description = "Edges represent hashtag -> video relationship";
+        } else if (vis.currentFilter === "top10_usage") {
+            hashtagScale = "scaled by usage count";
+            videoScale = "scaled by views";
+            description = "Displaying most popular hashtags associated with the top 10 videos";
+        } else if (vis.currentFilter === "top10_views") {
+            hashtagScale = "scaled by usage count";
+            videoScale = "scaled by views";
+            description = "Displaying most used hashtags associated with the top 10 videos";
+        }
+
+        let display_element = [
+            {
+                color: vis.colors[0],
+                label: `Hashtags (${hashtagScale})`
+            },
+            {
+                color: vis.colors[1],
+                label: `Videos (${videoScale})`
+            },
+            {
+                color: vis.colors[2],
+                label: `Edges: Hashtags <-> Videos`
+            }
+        ]
+
+        display_element.forEach((item, i) => {
+            let yPos = i * 22;
+
+            vis.legendGroup.append("circle")
+                .attr("cx", 0)
+                .attr("cy", yPos)
+                .attr("r", 6)
+                .attr("fill", item.color);
+
+            vis.legendGroup.append("text")
+                .attr("x", 15)
+                .attr("y", yPos + 4)
+                .attr("font-size", 10)
+                .attr("fill", "black")
+                .text(item.label);
+        });
+
+        vis.legendGroup.append("text")
+            .attr("x", 15)
+            .attr("y", 75)
+            .attr("font-size", 10)
+            .attr("fill", "black")
+            .text(description);
     }
 }
