@@ -202,10 +202,10 @@ class NetworkVis {
                         <strong>${d.label}</strong>
                         <br>
                         ${d.group === "hashtag" 
-                            ? `Usage Count: ${d.usage_count?.toLocaleString() || 0}
-                            <br>
-                            Views: ${d.view_count?.toLocaleString() || 0}` : 
-                            `Views: ${d.views?.toLocaleString() || 0}`}
+                            ? ` ${d.usage_count ? `Usage Count: ` + d.usage_count.toLocaleString() : ``}
+                            ${d.usage_count && (d.view_count || d.views) ? `<br>` : ``}
+                            ${d.view_count ? `Views: ` + d.view_count.toLocaleString() : ``}` : 
+                            `${d.views ? `Views: ` + d.views.toLocaleString() : ``}`}
                         `
                     )
                     .style("left", (event.pageX + 10) + "px")
