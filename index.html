@@ -48,12 +48,13 @@
                 <p>Considering that so much time is spent on youtube, it would be worth considering who is spending that time and on which channels.
                 </p>
                 <p>Language barriers, cultural preferences, and regional trends all factor into popularity within a given region.
-                 Virality and viewership is thereby a relatively local phenomenon.
+                <br>Virality and viewership is thereby a relatively local phenomenon.
+                <br>Given that, demographic context is important for the popularity and virality of any Youtube video.
                 </p>
                 <p>For exceptions, countries with poor or restricted internet access (e.g. Antarctica and North Korea) are excluded in grey.
                 <br>The second most populous nation in the world, China, is also suspiciously underrepresented due to 
-                <a href="https://en.wikipedia.org/wiki/Great_Firewall">The Great Firewall</a> 
-                <br>blocking most google services, including Youtube.
+                <a href="https://en.wikipedia.org/wiki/Great_Firewall">The Great Firewall</a>'s 
+                <br>blocking of most google services, including Youtube.
                 </p>
                 <div id="rank-list" style="height: 71vh; width: 100%;"></div>
                 <div id="rankTooltip" class="tooltip"></div>
@@ -61,6 +62,13 @@
         </div>
         <div class="row">
             <h1> Hashtag Associations </h1>
+            <p>Tags and tagging are often touted as an exploit to gain popularity, but this is a rather superstitious
+            <br>piece of folklore from times long past. In the modern era, tags that affect outcome tend to be more clear identifiers of content
+            <br>as to create a valid dataset for the almighty Youtube Algorithm.
+            </p>
+            <p>Due to this, tags are often utilized haphazardly, but ones of relevance are still able to create a clear picture of the Youtube landscape.
+            <br>Here, we can identify what tags are relevant for success, but success does not simply come to those who tag incorrectly.
+            <br>
             <p style="display:inline;">Select Network View</p>
             <select id="networkSelector" class="form-select" style="width: 36%; display:inline;"
                     onchange="updateNetworkVis()">
@@ -75,13 +83,22 @@
         <div class="row">
             <div class="col">
                 <h1 style="text-align: center;">What video length is most popular?</h1>
+                <p></p>
                 <div id="viewsPieChartDiv"></div>
                 <div id="pieTooltip"></div>
             </div>
         </div>
+        <div class="row">
+            <h1> Length & Category </h1>
+            <p>We can expect that different categories and types of videos will vary in length. 
+            <br>For instance, a fun fact about cornbread might be around the same length as the music video "Hips Don't Lie" by Shakira,
+            <br>but a CS50 lecture might run for the entirety of the Nier: Automata OST. Specific categories may have their preferences
+            <br>and hold a dominance in certain ranges of length.
+            <p> 
+            </p>
+        </div>
         <div class="row_Ea">
             <div class="colRE">
-                <h1> Youtube Dashboard </h1>
                 <div id="ytDashDiv" class="yt-dashboard-container">
                         <div id="ytVideoArea" class="yt-video-area"></div>
 
@@ -98,14 +115,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="treeTooltip"></div>
             </div>
             <div class="colLE">
-                <h1> Tree Map </h1>
                 <div id="ytTreeDiv" class="yt-tree-container">
                     <div id="ytTreeMapArea" class="yt-tree-area"></div>
                 </div>
             </div>
+            <div id="treeTooltip"></div>
         </div>
         <div class="row">
             <div class="col" id="eng-vis-wrapper" style="height: 90vh">
