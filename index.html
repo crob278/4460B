@@ -60,7 +60,7 @@
                 <div id="rankTooltip" class="tooltip"></div>
             </div>
         </div>
-        <div class="row">
+        <div class="row d-flex justify-content-end" style="text-align: right;">
             <h1> Hashtag Associations </h1>
             <p>Tags and tagging are often touted as an exploit to gain popularity, but this is a rather superstitious
             <br>piece of folklore from times long past. In the modern era, tags that affect outcome tend to be more clear identifiers of content
@@ -70,7 +70,7 @@
             <br>Here, we can identify what tags are relevant for success, but success does not simply come to those who tag incorrectly.
             <br>
             <p style="display:inline;">Select Network View</p>
-            <select id="networkSelector" class="form-select" style="width: 36%; display:inline;"
+            <select id="networkSelector" class="form-select" style="width: 36%; justify-self: right;"
                     onchange="updateNetworkVis()">
                 <option value="frequency">Top Hashtags By Frequency</option>
                 <option value="views">Top Hashtags By Views</option>
@@ -81,9 +81,14 @@
             <div id="hashtagTooltip" class="tooltip"></div>
         </div>
         <div class="row">
-            <div class="col">
-                <h1 style="text-align: center;">What video length is most popular?</h1>
-                <p></p>
+            <div class="col" style="text-align: center;">
+                <h1>What video length is most popular?</h1>
+                <p>Youtube has a history of restrictions and preferences for certain video lengths.
+                <br>For instance: The maximum length of a video was changed from 15 minutes to 12 hours in 2010.
+                <br>In the modern lore, the optimal time is expected to be around 8-10 minutes, specifically for 
+                <br>increased advertizing opportunities. However, much of the current landscape has been shifting 
+                <br>shorter and shorter, especially in the wake of youtube shorts.
+                </p>
                 <div id="viewsPieChartDiv"></div>
                 <div id="pieTooltip"></div>
             </div>
