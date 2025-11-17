@@ -27,7 +27,7 @@ class ChannelRank {
             .attr('class', 'title')
             .attr('id', 'map-title')
             .append('text')
-            .text('Popular Channels Globaly')
+            .text('Popular Channels Globally')
             .attr('transform', `translate(${vis.width / 2}, 20)`)
             .attr('text-anchor', 'middle');
 
