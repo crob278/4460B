@@ -14,8 +14,8 @@
     <div class="container-fluid">
         <div class="row header" id="title-card">
             <div class="col" id="title-card-content">
-                <h1>Youtube</h1>
-                <p>------------------------------------------------------------</p>
+                <h1>Algorithm Folklore</h1>
+                <p>What makes for a viral Youtube video?</p>
             </div>
         </div>
         <div class="row spacer transition-short"></div>
@@ -23,16 +23,17 @@
             <div class="col">
                 <h1> The Scale of Time spent on Youtube</h1>
                 <p>
-                     Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
-                <br>In 2017, they had announced that, in total, people were watching a billion hours of Youtube each day. 
+                    Youtube announced that Youtube Shorts were reaching 200 billion daily views in 2025. 
+                <br>Assuming the average viewership of a Youtube Short is 15 seconds, that would mean 3 trillion seconds
+                <br>or approximately 0.5% of all time spent by humanity in a day is spent watching youtube shorts.
                 <br>Lets put that into perspective...
                 </p>
                 <div id="shortsChartDiv" style="width: 100%; height: 71vh;">
-                <div id="shortsVisControls">
-                    <button type="button" class="btn btn-light" id="pause-button"
-                            onclick="pauseShortsVis()">Pause</button>
-                    <button type="button" class="btn btn-dark d-none" id="reset-button"
-                            onclick="resetShortsVis()">Restart</button>
+                    <div id="shortsVisControls">
+                        <button type="button" class="btn btn-light" id="pause-button"
+                                onclick="pauseShortsVis()">Pause</button>
+                        <button type="button" class="btn btn-dark d-none" id="reset-button"
+                                onclick="resetShortsVis()">Restart</button>
                     </div>
                 </div>
                 <div class="sources">
@@ -44,14 +45,32 @@
         <div class="row_Cr">
             <div class="colLC">
                 <h1> Popular Channels Across the World </h1>
+                <p>Considering that so much time is spent on youtube, it would be worth considering who is spending that time and on which channels.
+                </p>
+                <p>Language barriers, cultural preferences, and regional trends all factor into popularity within a given region.
+                <br>Virality and viewership is thereby a relatively local phenomenon.
+                <br>Given that, demographic context is important for the popularity and virality of any Youtube video.
+                </p>
+                <p>For exceptions, countries with poor or restricted internet access (e.g. Antarctica and North Korea) are excluded in grey.
+                <br>The second most populous nation in the world, China, is also suspiciously underrepresented due to 
+                <a href="https://en.wikipedia.org/wiki/Great_Firewall">The Great Firewall</a>'s 
+                <br>blocking of most google services, including Youtube.
+                </p>
                 <div id="rank-list" style="height: 71vh; width: 100%;"></div>
                 <div id="rankTooltip" class="tooltip"></div>
             </div>
         </div>
-        <div class="row">
+        <div class="row d-flex justify-content-end" style="text-align: right;">
             <h1> Hashtag Associations </h1>
+            <p>Tags and tagging are often touted as an exploit to gain popularity, but this is a rather superstitious
+            <br>piece of folklore from times long past. In the modern era, tags that affect outcome tend to be more clear identifiers of content
+            <br>as to create a valid dataset for the almighty Youtube Algorithm.
+            </p>
+            <p>Due to this, tags are often utilized haphazardly, but ones of relevance are still able to create a clear picture of the Youtube landscape.
+            <br>Here, we can identify what tags are relevant for success, but success does not simply come to those who tag incorrectly.
+            <br>
             <p style="display:inline;">Select Network View</p>
-            <select id="networkSelector" class="form-select" style="width: 36%; display:inline;"
+            <select id="networkSelector" class="form-select" style="width: 36%; justify-self: right;"
                     onchange="updateNetworkVis()">
                 <option value="frequency">Top Hashtags By Frequency</option>
                 <option value="views">Top Hashtags By Views</option>
@@ -62,29 +81,35 @@
             <div id="hashtagTooltip" class="tooltip"></div>
         </div>
         <div class="row">
-            <div class="col">
-                <h1 style="text-align: center;">What video length is most popular?</h1>
+            <div class="col" style="text-align: center;">
+                <h1>What video length is most popular?</h1>
+                <p>Youtube has a history of restrictions and preferences for certain video lengths.
+                <br>For instance: The maximum length of a video was changed from 15 minutes to 12 hours in 2010.
+                <br>In the modern lore, the optimal time is expected to be around 8-10 minutes, specifically for 
+                <br>increased advertizing opportunities. However, much of the current landscape has been shifting 
+                <br>shorter and shorter, especially in the wake of youtube shorts.
+                </p>
                 <div id="viewsPieChartDiv"></div>
                 <div id="pieTooltip"></div>
             </div>
         </div>
+        <div class="row">
+            <h1> Length & Category </h1>
+            <p>We can expect that different categories and types of videos will vary in length. 
+            <br>For instance, a fun fact about cornbread might be around the same length as the music video "Hips Don't Lie" by Shakira,
+            <br>but a CS50 lecture might run for the entirety of the Nier: Automata OST. Specific categories may have their preferences
+            <br>and hold a dominance in certain ranges of length.
+            <p> 
+            </p>
+        </div>
         <div class="row_Ea">
-
-            <div class="colLE">
-                <h1> Tree Map </h1>
-                <div id="ytTreeDiv" class="yt-tree-container">
-                    <div id="ytTreeMapArea" class="yt-tree-area"></div>
-                </div>
-            </div>
-
             <div class="colRE">
-                <h1> Youtube Dashboard </h1>
                 <div id="ytDashDiv" class="yt-dashboard-container">
                         <div id="ytVideoArea" class="yt-video-area"></div>
 
                     <div class="yt-slider-container">
-                        <input id="ytSlider" type="range" min="0" max="600" value="0">
-                        <div id="ytTooltip" class="slider-tooltip">0:00</div>
+                        <input id="ytSlider" type="range" min="0" max="600" value="60">
+                        <div id="ytTooltip" class="slider-tooltip">1:00</div>
                     </div>
 
                     <div class="yt-info-section">
@@ -95,20 +120,27 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="treeTooltip"></div>
             </div>
-
+            <div class="colLE">
+                <div id="ytTreeDiv" class="yt-tree-container">
+                    <div id="ytTreeMapArea" class="yt-tree-area"></div>
+                </div>
+            </div>
+            <div id="treeTooltip"></div>
         </div>
         <div class="row">
             <div class="col" id="eng-vis-wrapper" style="height: 90vh">
                 <h1> Rules of Engagement</h1>
-                <p> Explore the relationship between views and engagement metrics on YouTube. Click on a video to open it!
+                <p> How important is engagement on youtube? It is common for career Youtube creators to focus on engagement metrics and
+                <br>interaction reminders. However, at a large scale, it is not strictly correlated with viewership.</p>
+                <p> Due to factors such as <a href="https://en.wikipedia.org/wiki/Parasocial_interaction">parasociality</a>, niche interests, and algorithmic recommendations, videos can be directed to smaller but more
+                <br>engaged viewerbases. Larger audiences are less likely to be highly engaged, and a more varied audience will tend to include more apathetic viewers.
+                <p> Click on a video to open it in a new tab!
                 </p>
                 <div id="engagementControls" style="display: inline;">
                     <p style="display: inline;"> Select Video Category: </p>
                     <select id="categorySelector" class="form-select" style="width: 25%; display: inline;"
-                        onchange="updateEngagementCategory()">
+                        onchange="changeEngCategory()">
                         <option value="0">News & Politics</option>
                         <option value="1">Gaming</option>
                         <option value="2">Comedy</option>
@@ -116,22 +148,30 @@
                         <option value="4">Entertainment</option>
                         <option value="5">Music</option>
                         <option value="6">Education</option>
-                        <option value="7">Nonprofits & Activism</option>
+                    <!--<option value="7">Nonprofits & Activism</option>-->
                         <option value="8">Sports</option>
                         <option value="9">Autos & Vehicles</option>
                         <option value="10">Howto & Style</option>
                         <option value="11">Travel & Events</option>
                         <option value="12">Film & Animation</option>
                         <option value="13">Science & Technology</option>
-                        <option value="14">Pets & Animals</option>
-                        <option value="15">Shows</option>
+                    <!--<option value="14">Pets & Animals</option> -->
+                    <!--<option value="15">Shows</option> --->
                     </select>
                 </div>
-                <div id="rulesChartArea" style="height: 90%; width: 100%;"></div>
+                <div id="rulesChartArea" style="height: 80%; width: 90%;"></div>
                 
             </div>
         </div>
         <div class="row spacer transition-short transition-end"></div>
+        <div class="row footer">
+            <div class="col" id="footer-content">
+                <h3> Credits </h3>
+                <p> Carlos Robinson: crobinson304@gatech.edu</p>
+                <p> Ewuresi Ayanna Amoo-Adare: eamooadare3@gatech.edu</p>
+                <p> Sean Mulloy: smulloy3@gatech.edu</p>
+            </div>
+        </div>
     </div>
 <!-- JS Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 

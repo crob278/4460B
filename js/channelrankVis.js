@@ -6,7 +6,7 @@ class ChannelRank {
         this.rankData = rankData;
 
         // define colors
-        this.colors = ['#e07c53', '#cb7c7c', '#d25f5f', '#d23d3d', '#db1818', '#770303']
+        this.colors = ['#ffd3c1ff', '#ffafa6ff', '#ff908dff', '#f76363ff', '#eb4848ff', '#ff0000ff']
         this.initVis()
     }
 
@@ -126,16 +126,17 @@ class ChannelRank {
                     return country.color
                 } else {
                     // console.log("Country rejected: " + country);
-                    return '#c1b3b3';
+                    return '#ecececff';
                 }
             })
+            .style("stroke-width", "0.5px")
             .on("mouseover", function(event, d) {
                 let info = vis.countryInfo[d.properties.name];
 
                 if (info) {
                     d3.select(this)
-                        .attr("stroke-width", "2px")
-                        .attr("stroke", "black");
+                        .style("stroke-width", "1px")
+                        .style("stroke", "black");
                     vis.tooltip
                         .style("display", "block")
                         .style("opacity", 1)
@@ -159,7 +160,8 @@ class ChannelRank {
                 let info = vis.countryInfo[d.properties.name];
                 d3.select(this)
                     // console.log(info)
-                    .attr("fill", info ? info.color : '#c1b3b3')
+                    .style("stroke-width", "0.5px")
+                    .attr("fill", info ? info.color : '#ecececff')
                     // console.log("name, info, info.color: " + d.properties.name + ", " + info + ", " + info.color );
 
                 vis.tooltip

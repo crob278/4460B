@@ -48,6 +48,7 @@ function initMainPage(allDataArray) {
     // console.log(allDataArray);
 
     ytDashVis = new YtDashboard("ytDashDiv", allDataArray[0]);
+    dashObserver.observe(document.getElementById('ytDashDiv'));
 
     viewsVis = new PieChart('viewsPieChartDiv', allDataArray[0]);
 
@@ -107,21 +108,19 @@ function convertToNumber(str) {
     return parseFloat(str) || 0;
 }
 
+// Accessor for rendering YT Dashboard
+function renderDash() { ytDashVis.render() }
+
 // Accessors for YT Shorts Vis
-function startShortsVis() { shortsVis.start(); }
-function pauseShortsVis() { shortsVis.pause(); }
-function resetShortsVis() { shortsVis.reset(); }
+function startShortsVis() { shortsVis.start() }
+function pauseShortsVis() { shortsVis.pause() }
+function resetShortsVis() { shortsVis.reset() }
 
 
 // Accessors for Engagement Vis
-function updateEngagementCategory() { 
-    let newCategory = document.getElementById('categorySelector').value;
-    engagementVis.changeCategory(newCategory);
-}
-
-function updateEngagementThreshold() { 
-    let newThreshold = +document.getElementById('viewThreshold').value;
-    engagementVis.changeViewThreshold(newThreshold);
+function changeEngCategory() { 
+    let categorySelector = document.getElementById('categorySelector');
+    engagementVis.changeCategory(categorySelector.value);
 }
 
 // Accessors for Network Vis

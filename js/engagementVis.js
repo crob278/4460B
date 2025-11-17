@@ -1,4 +1,4 @@
-const categoryMap = {
+const categories = {
     0: "News & Politics",
     1: "Gaming",
     2: "Comedy",
@@ -17,8 +17,8 @@ const categoryMap = {
     15: "Shows"
 };
 
-
-
+const defaultCategory = "News & Politics";
+const threshold = 1000;
 
 class EngagementVis {
     constructor(parentElement, data) {
@@ -27,8 +27,8 @@ class EngagementVis {
         this.filteredData = [];
         this.displayData = [];
 
-        this.category = "News & Politics"; // Default Category
-        this.viewThreshold = 1000; // Default View Threshold
+        this.category = defaultCategory; 
+        this.viewThreshold = threshold; 
         
         this.initVis();
     }
@@ -216,7 +216,7 @@ class EngagementVis {
 
     changeCategory(category) {
         let vis = this;
-        vis.category = categoryMap[category] || null;
+        vis.category = categories[category] || defaultCategory;
 
         vis.wrangleData();
     }
